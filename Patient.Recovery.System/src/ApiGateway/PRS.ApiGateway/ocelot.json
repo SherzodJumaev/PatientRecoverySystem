@@ -1,0 +1,175 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/patients",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
+            "UpstreamPathTemplate": "/api/patients",
+            "UpstreamHttpMethod": ["GET", "POST"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/patients/{id}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
+            "UpstreamPathTemplate": "/api/patients/{id}",
+            "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/patients/by-email/{email}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
+            "UpstreamPathTemplate": "/api/patients/by-email/{email}",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/monitoring",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
+            "UpstreamPathTemplate": "/api/monitoring",
+            "UpstreamHttpMethod": ["POST"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/monitoring/{id}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
+            "UpstreamPathTemplate": "/api/monitoring/{id}",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/monitoring/patient/{patientId}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
+            "UpstreamPathTemplate": "/api/monitoring/patient/{patientId}",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/monitoring/patient/{patientId}/recent",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
+            "UpstreamPathTemplate": "/api/monitoring/patient/{patientId}/recent",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/monitoring/patient/{patientId}/check-alarms",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
+            "UpstreamPathTemplate": "/api/monitoring/patient/{patientId}/check-alarms",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/diagnosis",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7003
+                }
+            ],
+            "UpstreamPathTemplate": "/api/diagnosis",
+            "UpstreamHttpMethod": ["GET", "POST"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/diagnosis/{id}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7003
+                }
+            ],
+            "UpstreamPathTemplate": "/api/diagnosis/{id}",
+            "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/diagnosis/patient/{patientId}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7003
+                }
+            ],
+            "UpstreamPathTemplate": "/api/diagnosis/patient/{patientId}",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/rehabilitation",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7004
+                }
+            ],
+            "UpstreamPathTemplate": "/api/rehabilitation",
+            "UpstreamHttpMethod": ["GET", "POST"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/rehabilitation/{id}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7004
+                }
+            ],
+            "UpstreamPathTemplate": "/api/rehabilitation/{id}",
+            "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/rehabilitation/patient/{patientId}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7004
+                }
+            ],
+            "UpstreamPathTemplate": "/api/rehabilitation/patient/{patientId}",
+            "UpstreamHttpMethod": ["GET"]
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "https://localhost:7000"
+    }
+}

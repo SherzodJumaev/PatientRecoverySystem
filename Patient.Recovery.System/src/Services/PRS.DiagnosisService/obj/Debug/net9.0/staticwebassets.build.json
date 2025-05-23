@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "BJuhUZRrhTDfxGBeccLJZwt98vxoSTaOPpmyuMa7eSE=",
+  "Source": "PRS.DiagnosisService",
+  "BasePath": "_content/PRS.DiagnosisService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
