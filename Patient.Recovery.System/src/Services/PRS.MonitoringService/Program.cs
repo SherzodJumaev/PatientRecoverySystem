@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using PRS.MonitoringService.Extensions;
 using PRS.MonitoringService.Services;
 using PRS.Shared.Infrastructure.Data;
 
@@ -10,7 +8,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database
 builder.Services.AddDbContext<MonitoringDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -25,9 +22,6 @@ builder.Services.AddDbContext<MonitoringDbContext>(options =>
 );
 
 builder.Services.AddScoped<IMonitoringService, MonitoringService>();
-
-// SignalR for real-time monitoring
-builder.Services.AddSignalR();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -47,43 +41,41 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    // app.ApplyMigrations();
+    using IServiceScope scope = app.Services.CreateScope();
+
+    EnsureDatabaseUpToDate<MonitoringDbContext>(scope);
 }
 
-// Wait for database to be ready
-var maxRetries = 10;
-var delay = TimeSpan.FromSeconds(5);
-
-for (int i = 0; i < maxRetries; i++)
-{
-    try
-    {
-        using var scope = app.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<MonitoringDbContext>();
-        await context.Database.CanConnectAsync();
-        break;
-    }
-    catch (Exception ex)
-    {
-        if (i == maxRetries - 1)
-            throw;
-            
-        Console.WriteLine($"Database connection attempt {i + 1} failed: {ex.Message}");
-        await Task.Delay(delay);
-    }
-}
-
-// Then run migrations
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<MonitoringDbContext>();
-    context.Database.Migrate();
-}
-
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();
-
 app.MapControllers();
 
 app.Run();
+
+static void EnsureDatabaseUpToDate<TDbContext>(IServiceScope scope)
+    where TDbContext : DbContext
+{
+    using TDbContext context = scope.ServiceProvider
+        .GetRequiredService<TDbContext>();
+
+    try
+    {
+        // Try to apply migrations first (if any exist)
+        var pendingMigrations = context.Database.GetPendingMigrations();
+        if (pendingMigrations.Any())
+        {
+            context.Database.Migrate();
+        }
+        else if (!context.Database.CanConnect() || !context.Database.GetAppliedMigrations().Any())
+        {
+            // No migrations exist, create database from model
+            context.Database.EnsureCreated();
+        }
+    }
+    catch
+    {
+        // Fallback to EnsureCreated if migrations fail
+        context.Database.EnsureCreated();
+    }
+}

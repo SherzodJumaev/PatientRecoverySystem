@@ -15,3 +15,4 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Shared\PRS.Shared.Infrastructure\
 E:\Dotnet-Projects\Patient.Recovery.System\src\Shared\PRS.Shared.Infrastructure\obj\Debug\net9.0\ref\PRS.Shared.Infrastructure.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Shared\PRS.Shared.Infrastructure\bin\Debug\net9.0\PRS.Shared.Infrastructure.runtimeconfig.json
 E:\Dotnet-Projects\Patient.Recovery.System\src\Shared\PRS.Shared.Infrastructure\obj\Debug\net9.0\PRS.Shared.Infrastructure.genruntimeconfig.cache
+E:\Dotnet-Projects\Patient.Recovery.System\src\Shared\PRS.Shared.Infrastructure\obj\Debug\net9.0\PRS.Shared.Infrastructure.sourcelink.json

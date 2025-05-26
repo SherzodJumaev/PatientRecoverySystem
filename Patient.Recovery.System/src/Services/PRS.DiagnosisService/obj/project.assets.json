@@ -1034,6 +1034,40 @@
           "buildTransitive/Mono.TextTemplating.targets": {}
         }
       },
+      "Npgsql/9.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2"
+        },
+        "compile": {
+          "lib/net8.0/Npgsql.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "[9.0.1, 10.0.0)",
+          "Microsoft.EntityFrameworkCore.Relational": "[9.0.1, 10.0.0)",
+          "Npgsql": "9.0.3"
+        },
+        "compile": {
+          "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/8.1.1": {
         "type": "package",
         "dependencies": {
@@ -1716,6 +1750,36 @@
             "assetType": "runtime",
             "rid": "win"
           }
+        }
+      },
+      "PRS.Shared.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.5",
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.5",
+          "Microsoft.EntityFrameworkCore.Tools": "9.0.5",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4",
+          "PRS.Shared.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/PRS.Shared.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PRS.Shared.Infrastructure.dll": {}
+        }
+      },
+      "PRS.Shared.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.5"
+        },
+        "compile": {
+          "bin/placeholder/PRS.Shared.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PRS.Shared.Models.dll": {}
         }
       }
     }
@@ -3977,6 +4041,38 @@
         "readme.md"
       ]
     },
+    "Npgsql/9.0.3": {
+      "sha512": "tPvY61CxOAWxNsKLEBg+oR646X4Bc8UmyQ/tJszL/7mEmIXQnnBhVJZrZEEUv0Bstu0mEsHZD5At3EO8zQRAYw==",
+      "type": "package",
+      "path": "npgsql/9.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/Npgsql.dll",
+        "lib/net6.0/Npgsql.xml",
+        "lib/net8.0/Npgsql.dll",
+        "lib/net8.0/Npgsql.xml",
+        "npgsql.9.0.3.nupkg.sha512",
+        "npgsql.nuspec",
+        "postgresql.png"
+      ]
+    },
+    "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.4": {
+      "sha512": "mw5vcY2IEc7L+IeGrxpp/J5OSnCcjkjAgJYCm/eD52wpZze8zsSifdqV7zXslSMmfJG2iIUGZyo3KuDtEFKwMQ==",
+      "type": "package",
+      "path": "npgsql.entityframeworkcore.postgresql/9.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll",
+        "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.xml",
+        "npgsql.entityframeworkcore.postgresql.9.0.4.nupkg.sha512",
+        "npgsql.entityframeworkcore.postgresql.nuspec",
+        "postgresql.png"
+      ]
+    },
     "Swashbuckle.AspNetCore/8.1.1": {
       "sha512": "HJHexmU0PiYevgTLvKjYkxEtclF2w4O7iTd3Ef3p6KeT0kcYLpkFVgCw6glpGS57h8769anv8G+NFi9Kge+/yw==",
       "type": "package",
@@ -5239,6 +5335,16 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "PRS.Shared.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../../Shared/PRS.Shared.Infrastructure/PRS.Shared.Infrastructure.csproj",
+      "msbuildProject": "../../Shared/PRS.Shared.Infrastructure/PRS.Shared.Infrastructure.csproj"
+    },
+    "PRS.Shared.Models/1.0.0": {
+      "type": "project",
+      "path": "../../Shared/PRS.Shared.Models/PRS.Shared.Models.csproj",
+      "msbuildProject": "../../Shared/PRS.Shared.Models/PRS.Shared.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5248,6 +5354,8 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.5",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.21.0",
+      "PRS.Shared.Infrastructure >= 1.0.0",
+      "PRS.Shared.Models >= 1.0.0",
       "Swashbuckle.AspNetCore >= 8.1.1",
       "Swashbuckle.AspNetCore.SwaggerGen >= 8.1.1",
       "Swashbuckle.AspNetCore.SwaggerUI >= 8.1.1"
@@ -5284,7 +5392,14 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\Dotnet-Projects\\Patient.Recovery.System\\src\\Shared\\PRS.Shared.Infrastructure\\PRS.Shared.Infrastructure.csproj": {
+              "projectPath": "E:\\Dotnet-Projects\\Patient.Recovery.System\\src\\Shared\\PRS.Shared.Infrastructure\\PRS.Shared.Infrastructure.csproj"
+            },
+            "E:\\Dotnet-Projects\\Patient.Recovery.System\\src\\Shared\\PRS.Shared.Models\\PRS.Shared.Models.csproj": {
+              "projectPath": "E:\\Dotnet-Projects\\Patient.Recovery.System\\src\\Shared\\PRS.Shared.Models\\PRS.Shared.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

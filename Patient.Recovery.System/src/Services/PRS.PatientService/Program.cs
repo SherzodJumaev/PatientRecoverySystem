@@ -8,10 +8,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database
-// builder.Services.AddDbContext<PatientDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddDbContext<PatientDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -45,37 +41,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+    using IServiceScope scope = app.Services.CreateScope();
 
-// Wait for database to be ready
-var maxRetries = 10;
-var delay = TimeSpan.FromSeconds(5);
-
-for (int i = 0; i < maxRetries; i++)
-{
-    try
-    {
-        using var scope = app.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<PatientDbContext>();
-        await context.Database.CanConnectAsync();
-        Console.WriteLine($"Database Created successfully");
-        break;
-    }
-    catch (Exception ex)
-    {
-        if (i == maxRetries - 1)
-            throw;
-
-        Console.WriteLine($"Database connection attempt {i + 1} failed: {ex.Message}");
-        await Task.Delay(delay);
-    }
-}
-
-// Then run migrations
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<PatientDbContext>();
-    context.Database.Migrate();
+    EnsureDatabaseUpToDate<PatientDbContext>(scope);
 }
 
 app.UseHttpsRedirection();
@@ -84,3 +52,39 @@ app.UseAuthentication();
 app.MapControllers();
 
 app.Run();
+
+static void EnsureDatabaseUpToDate<TDbContext>(IServiceScope scope)
+    where TDbContext : DbContext
+{
+    using TDbContext context = scope.ServiceProvider
+        .GetRequiredService<TDbContext>();
+
+    try
+    {
+        // Try to apply migrations first (if any exist)
+        var pendingMigrations = context.Database.GetPendingMigrations();
+        if (pendingMigrations.Any())
+        {
+            context.Database.Migrate();
+        }
+        else if (!context.Database.CanConnect() || !context.Database.GetAppliedMigrations().Any())
+        {
+            // No migrations exist, create database from model
+            context.Database.EnsureCreated();
+        }
+    }
+    catch
+    {
+        // Fallback to EnsureCreated if migrations fail
+        context.Database.EnsureCreated();
+    }
+}
+// 
+// static void ApplyMigration<TDbContext>(IServiceScope scope)
+//     where TDbContext : DbContext
+// {
+//     using TDbContext context = scope.ServiceProvider
+//         .GetRequiredService<TDbContext>();
+
+//     context.Database.Migrate();
+// }

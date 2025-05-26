@@ -13,19 +13,7 @@ namespace PRS.Shared.Infrastructure.Data
     {
         public MonitoringDbContext(DbContextOptions<MonitoringDbContext> options) : base(options)
         {
-            // try
-            // {
-            //     var dbCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
-            //     if (dbCreator is not null)
-            //     {
-            //         if (!dbCreator.CanConnect()) dbCreator.Create();
-            //         if (!dbCreator.HasTables()) dbCreator.CreateTables();
-            //     }
-            // }
-            // catch (Exception ex)
-            // {
-            //     Console.WriteLine(ex.Message);
-            // }
+           
         }
 
         public DbSet<MonitoringRecord> MonitoringRecords { get; set; }

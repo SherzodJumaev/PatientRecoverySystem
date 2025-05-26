@@ -11,7 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="initializePage()">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
@@ -198,6 +198,7 @@
                                     <th>Gender</th>
                                     <th>Email</th>
                                     <th>Phone</th>
+                                    <th>Location</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -308,6 +309,7 @@
                                     <th>Diagnosis</th>
                                     <th>Treatment</th>
                                     <th>Status</th>
+                                    <th>Severity</th>
                                     <th>Date</th>
                                     <th>Actions</th>
                                 </tr>
@@ -397,7 +399,6 @@
                                         <option value="">Select Gender</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
                                     </select>
                                 </div>
                             </div>

@@ -167,3 +167,4 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\ob
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Npgsql.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\staticwebassets.build.json.cache
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.sourcelink.json

@@ -1,12 +1,17 @@
 // src/Web/PatientRecovery.Web/wwwroot/js/app.js
 
 // API Configuration
-const API_BASE_URL = "https://localhost:7000/api"; // API Gateway URL
+const API_BASE_URL = "http://localhost:5000/api"; // API Gateway URL
 
 // Global variables
 let patients = [];
 let monitoringRecords = [];
 let vitalsChart = null;
+
+async function initializePage() {
+    patients = await loadPatients(); // <- wait to load actual data
+    loadPatientsTable();
+}
 
 // Initialize application
 document.addEventListener("DOMContentLoaded", function () {
@@ -38,7 +43,9 @@ function showSection(sectionName) {
     // Update navigation
     const navLinks = document.querySelectorAll(".nav-link");
     navLinks.forEach((link) => link.classList.remove("active"));
-    event.target.classList.add("active");
+    if (element) {
+        element.classList.add("active");
+    }
 
     // Load section-specific data
     switch (sectionName) {
@@ -85,15 +92,19 @@ async function apiRequest(endpoint, method = "GET", data = null) {
     }
 }
 
-// Patient Functions
+async function countPatients() {
+    return patients.length;
+}
+
 async function loadPatients() {
     try {
-        const response = await apiRequest("/patients");
-        patients = response.data || [];
+        const response = await apiRequest("/Patients");
+        console.log("API response:", response);
 
-        // Update patient selects
+        // Assuming response is already the array
+        const patients = response || [];
+
         updatePatientSelects();
-
         return patients;
     } catch (error) {
         console.error("Error loading patients:", error);
@@ -121,6 +132,7 @@ function updatePatientSelects() {
 function loadPatientsTable() {
     const tbody = document.querySelector("#patients-table tbody");
     tbody.innerHTML = "";
+    console.log(patients);
 
     patients.forEach((patient) => {
         const row = document.createElement("tr");
@@ -131,8 +143,9 @@ function loadPatientsTable() {
             <td>${patient.gender}</td>
             <td>${patient.email || "-"}</td>
             <td>${patient.phoneNumber || "-"}</td>
+            <td>${patient.address || "-"}</td>
             <td>
-                <button class="btn btn-sm btn-primary" onclick="editPatient(${
+                <button class="btn btn-sm btn-primary" onclick="showEditPatientModal(${
                     patient.id
                 })">
                     <i class="fas fa-edit"></i>
@@ -155,6 +168,15 @@ function showAddPatientModal() {
     modal.show();
 }
 
+function hidePatientModal() {
+    // Close modal and reset form
+    const modal = bootstrap.Modal.getInstance(
+        document.getElementById("addPatientModal")
+    );
+    modal.hide();
+    document.getElementById("addPatientForm").reset();
+}
+
 async function addPatient() {
     try {
         const formData = {
@@ -168,20 +190,13 @@ async function addPatient() {
         };
 
         showLoading(true);
-        const response = await apiRequest("/patients", "POST", formData);
+        const response = await apiRequest("/Patients", "POST", formData);
 
-        if (response.success) {
-            showToast("Patient added successfully", "success");
-            await loadPatients();
-            loadPatientsTable();
+        showToast("Patient added successfully", "success");
 
-            // Close modal and reset form
-            const modal = bootstrap.Modal.getInstance(
-                document.getElementById("addPatientModal")
-            );
-            modal.hide();
-            document.getElementById("addPatientForm").reset();
-        }
+        patients = await loadPatients();
+        loadPatientsTable();
+        hidePatientModal();
     } catch (error) {
         console.error("Error adding patient:", error);
         showToast("Error adding patient", "error");
@@ -197,16 +212,108 @@ async function deletePatient(patientId) {
 
     try {
         showLoading(true);
-        const response = await apiRequest(`/patients/${patientId}`, "DELETE");
+        const response = await fetch(`${API_BASE_URL}/Patients/${patientId}`, {
+            method: "DELETE",
+        });
 
-        if (response.success) {
+        if (response.status == 204) {
             showToast("Patient deleted successfully", "success");
             await loadPatients();
             loadPatientsTable();
+        } else {
+            showToast("Failed to delete patient", "error");
         }
     } catch (error) {
         console.error("Error deleting patient:", error);
         showToast("Error deleting patient", "error");
+    } finally {
+        showLoading(false);
+    }
+}
+
+async function showEditPatientModal(patientId) {
+    try {
+        // Get patient data from your patients array or make an API call
+        const patient = patients.find((p) => p.id === patientId);
+
+        if (!patient) {
+            showToast("Patient not found", "error");
+            return;
+        }
+
+        // Populate the form fields with existing patient data
+        document.getElementById("firstName").value = patient.firstName || "";
+        document.getElementById("lastName").value = patient.lastName || "";
+        document.getElementById("dateOfBirth").value =
+            patient.dateOfBirth || "";
+        document.getElementById("gender").value = patient.gender || "";
+        document.getElementById("email").value = patient.email || "";
+        document.getElementById("phoneNumber").value =
+            patient.phoneNumber || "";
+        document.getElementById("address").value = patient.address || "";
+
+        // Change the modal title and button text
+        document.querySelector("#addPatientModal .modal-title").textContent =
+            "Edit Patient";
+
+        // Store the patient ID for later use
+        document
+            .getElementById("addPatientModal")
+            .setAttribute("data-patient-id", patientId);
+
+        // Change the button onclick to call editPatient instead of addPatient
+        const submitButton = document.querySelector(
+            "#addPatientModal .btn-primary"
+        );
+        submitButton.textContent = "Update Patient";
+        submitButton.setAttribute("onclick", `editPatient(${patientId})`);
+
+        showAddPatientModal();
+        // await loadPatients(); // Reload patients data
+        // loadPatientsTable(); // Refresh UI table
+    } catch (error) {
+        console.error("Error loading patient data:", error);
+        showToast("Error loading patient data", "error");
+    }
+}
+
+async function editPatient(patientId) {
+    try {
+        const formData = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            dateOfBirth: document.getElementById("dateOfBirth").value,
+            gender: document.getElementById("gender").value,
+            email: document.getElementById("email").value,
+            phoneNumber: document.getElementById("phoneNumber").value,
+            address: document.getElementById("address").value,
+        };
+
+        showLoading(true);
+
+        const response = await apiRequest(
+            `/Patients/${patientId}`,
+            "PUT",
+            formData
+        );
+
+        showToast("Patient edited successfully", "success");
+
+        await loadPatients(); // Reload patients data
+        loadPatientsTable(); // Refresh UI table
+        hidePatientModal();
+        document.querySelector("#addPatientModal .modal-title").textContent =
+            "Add New Patient";
+
+        // Change the button onclick to call editPatient instead of addPatient
+        const submitButton = document.querySelector(
+            "#addPatientModal .btn-primary"
+        );
+        submitButton.textContent = "Add Patient";
+        submitButton.setAttribute("onclick", `addPatient()`);
+    } catch (error) {
+        console.error("Error updating patient:", error);
+        showToast("Error updating patient", "error");
     } finally {
         showLoading(false);
     }
@@ -251,7 +358,7 @@ async function addMonitoringRecord() {
         };
 
         showLoading(true);
-        const response = await apiRequest("/monitoring", "POST", formData);
+        const response = await apiRequest("/Monitoring", "POST", formData);
 
         if (response.success) {
             showToast("Monitoring record added successfully", "success");
@@ -290,7 +397,7 @@ async function loadPatientMonitoring() {
     try {
         showLoading(true);
         const response = await apiRequest(
-            `/monitoring/patient/${patientId}/recent?hours=${timeframe}`
+            `/Monitoring/patient/${patientId}/recent?hours=${timeframe}`
         );
 
         if (response.success) {
@@ -434,7 +541,7 @@ function updateVitalsChart() {
 async function checkPatientAlarms(patientId) {
     try {
         const response = await apiRequest(
-            `/monitoring/patient/${patientId}/check-alarms`
+            `/Monitoring/patient/${patientId}/check-alarms`
         );
 
         if (response.success && response.data) {
@@ -448,12 +555,13 @@ async function checkPatientAlarms(patientId) {
 // Dashboard Functions
 async function loadDashboard() {
     try {
+        const patients = await loadPatients();
         // Update statistics
         document.getElementById("total-patients").textContent = patients.length;
 
         // Load recent monitoring records for dashboard
         const recentResponse = await apiRequest(
-            "/monitoring/patient/1/recent?hours=24"
+            "/Monitoring/patient/1/recent?hours=24"
         );
         if (recentResponse.success) {
             const recentRecords = recentResponse.data || [];

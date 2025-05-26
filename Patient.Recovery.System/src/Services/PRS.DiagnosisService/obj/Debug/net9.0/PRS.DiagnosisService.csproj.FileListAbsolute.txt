@@ -159,3 +159,10 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\obj
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\obj\Debug\net9.0\PRS.DiagnosisService.genruntimeconfig.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\obj\Debug\net9.0\ref\PRS.DiagnosisService.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\obj\Debug\net9.0\staticwebassets.build.json.cache
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\bin\Debug\net9.0\Npgsql.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\bin\Debug\net9.0\PRS.Shared.Infrastructure.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\bin\Debug\net9.0\PRS.Shared.Models.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\bin\Debug\net9.0\PRS.Shared.Models.pdb
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\bin\Debug\net9.0\PRS.Shared.Infrastructure.pdb
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnosisService\obj\Debug\net9.0\PRS.DiagnosisService.sourcelink.json
