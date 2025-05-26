@@ -24,5 +24,7 @@ namespace PRS.Shared.Models.DTOs.PatientDTOs
 
         [MaxLength(500)]
         public string Address { get; set; } = string.Empty;
+        public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; } = string.Empty;
     }
 }

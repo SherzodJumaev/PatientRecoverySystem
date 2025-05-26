@@ -13,5 +13,6 @@ namespace PRS.PatientService.Services
         Task<Patient> CreatePatientAsync(Patient patient, CancellationToken ct);
         Task<Patient?> UpdatePatientAsync(int id, Patient patient, CancellationToken ct);
         Task<bool> DeletePatientAsync(int id, CancellationToken ct);
+        Task<bool> CheckPatientExists(int patientId);
     }
 }

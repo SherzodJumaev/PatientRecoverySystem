@@ -9,11 +9,11 @@ namespace PRS.Shared.Models.Mappers
 {
     public static class MonitoringRecordMappers
     {
-        public static MonitoringRecord ToMonitoringRecordFromCreateMonitoringRecordDto(this CreateMonitoringRecordDto createMonitoringRecordDto)
+        public static MonitoringRecord ToMonitoringRecordFromCreateMonitoringRecordDto(this CreateMonitoringRecordDto createMonitoringRecordDto, int patientId)
         {
             return new MonitoringRecord
             {
-                PatientId = createMonitoringRecordDto.PatientId,
+                PatientId = patientId,
                 Temperature = createMonitoringRecordDto.Temperature,
                 BloodPressureDiastolic = createMonitoringRecordDto.BloodPressureDiastolic,
                 BloodPressureSystolic = createMonitoringRecordDto.BloodPressureSystolic,
@@ -22,7 +22,7 @@ namespace PRS.Shared.Models.Mappers
                 Symptoms = createMonitoringRecordDto.Symptoms,
                 Notes = createMonitoringRecordDto.Notes,
                 Location = createMonitoringRecordDto.Location,
-                RecordedBy = createMonitoringRecordDto.Location,
+                RecordedBy = createMonitoringRecordDto.RecordedBy,
                 RecordedAt = DateTime.UtcNow
             };
         }

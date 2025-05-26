@@ -99,7 +99,7 @@ async function countPatients() {
 async function loadPatients() {
     try {
         const response = await apiRequest("/Patients");
-        console.log("API response:", response);
+        // console.log("API response:", response);
 
         // Assuming response is already the array
         const patients = response || [];
@@ -132,7 +132,7 @@ function updatePatientSelects() {
 function loadPatientsTable() {
     const tbody = document.querySelector("#patients-table tbody");
     tbody.innerHTML = "";
-    console.log(patients);
+    // console.log(patients);
 
     patients.forEach((patient) => {
         const row = document.createElement("tr");
@@ -558,14 +558,15 @@ async function loadDashboard() {
         const patients = await loadPatients();
         // Update statistics
         document.getElementById("total-patients").textContent = patients.length;
-
+        
         // Load recent monitoring records for dashboard
         const recentResponse = await apiRequest(
-            "/Monitoring/patient/1/recent?hours=24"
+            "/Monitoring/patient/1/recent?hours=490"
         );
-        if (recentResponse.success) {
-            const recentRecords = recentResponse.data || [];
-            updateDashboardMonitoringTable(recentRecords);
+        
+        if (Array.isArray(recentResponse) && recentResponse.length > 0) {
+            // const recentRecords = records.data || [];
+            updateDashboardMonitoringTable(recentResponse);
         }
 
         // Update other stats (mock data for now)
@@ -589,6 +590,8 @@ function updateDashboardMonitoringTable(records) {
     // Show only last 5 records
     const recentRecords = records.slice(0, 5);
 
+    console.log(recentRecords)
+    console.log(records)
     recentRecords.forEach((record) => {
         const patient = patients.find((p) => p.id === record.patientId);
         const patientName = patient

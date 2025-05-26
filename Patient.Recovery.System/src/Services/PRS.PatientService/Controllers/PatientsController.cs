@@ -86,5 +86,12 @@ namespace PRS.PatientService.Controllers
 
             return NotFound();
         }
+
+        [HttpGet("exists/{id}")]
+        public async Task<IActionResult> CheckPatientExists([FromRoute] int patientId)
+        {
+            var existPatient = await _patientService.CheckPatientExists(patientId);
+            return existPatient ? Ok() : NotFound();
+        }
     }
 }

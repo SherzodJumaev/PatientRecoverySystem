@@ -47,6 +47,8 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bi
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Mono.TextTemplating.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Newtonsoft.Json.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Npgsql.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -154,8 +156,10 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\ob
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.csproj.CoreCompileInputs.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.MvcApplicationPartsAssemblyInfo.cs
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.MvcApplicationPartsAssemblyInfo.cache
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.sourcelink.json
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\scopedcss\bundle\PRS.MonitoringService.styles.css
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\staticwebassets.build.json
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\staticwebassets.build.json.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\staticwebassets.development.json
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.Moni.80889A24.Up2Date
@@ -164,7 +168,10 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\ob
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.pdb
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.genruntimeconfig.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\ref\PRS.MonitoringService.dll
-E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Npgsql.dll
-E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\staticwebassets.build.json.cache
-E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\obj\Debug\net9.0\PRS.MonitoringService.sourcelink.json
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Google.Protobuf.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Grpc.AspNetCore.Server.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Grpc.AspNetCore.Server.ClientFactory.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Grpc.Core.Api.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Grpc.Net.Client.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Grpc.Net.ClientFactory.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.MonitoringService\bin\Debug\net9.0\Grpc.Net.Common.dll

@@ -75,5 +75,14 @@ namespace PRS.PatientService.Services
 
             return existingPatient;
         }
+
+        public async Task<bool> CheckPatientExists(int patientId)
+        {
+            var existingPatient = await _context.Patients.FirstOrDefaultAsync(patient => patient.Id == patientId);
+
+            if (existingPatient is null) return false;
+
+            return true;
+        }
     }
 }

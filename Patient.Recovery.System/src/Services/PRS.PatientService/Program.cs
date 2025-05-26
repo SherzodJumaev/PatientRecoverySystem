@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using PRS.PatientService.Services;
 using PRS.Shared.Infrastructure.Data;
@@ -34,6 +35,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddGrpc();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,6 +48,7 @@ if (app.Environment.IsDevelopment())
     EnsureDatabaseUpToDate<PatientDbContext>(scope);
 }
 
+app.MapGrpcService<GrpcPatientService>();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();
@@ -79,12 +82,3 @@ static void EnsureDatabaseUpToDate<TDbContext>(IServiceScope scope)
         context.Database.EnsureCreated();
     }
 }
-// 
-// static void ApplyMigration<TDbContext>(IServiceScope scope)
-//     where TDbContext : DbContext
-// {
-//     using TDbContext context = scope.ServiceProvider
-//         .GetRequiredService<TDbContext>();
-
-//     context.Database.Migrate();
-// }

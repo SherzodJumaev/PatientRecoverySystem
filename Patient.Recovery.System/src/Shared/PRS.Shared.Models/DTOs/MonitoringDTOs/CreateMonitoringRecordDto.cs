@@ -7,7 +7,6 @@ namespace PRS.Shared.Models.DTOs.MonitoringDTOs
 {
     public class CreateMonitoringRecordDto
     {
-        public int PatientId { get; set; }
         public double? Temperature { get; set; }
         public int? BloodPressureSystolic { get; set; }
         public int? BloodPressureDiastolic { get; set; }
@@ -17,6 +16,5 @@ namespace PRS.Shared.Models.DTOs.MonitoringDTOs
         public string Notes { get; set; } = string.Empty;
         public string Location { get; set; } = string.Empty;
         public string RecordedBy { get; set; } = string.Empty;
-        public DateTime RecordedAt { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/Monitoring",
+            "DownstreamPathTemplate": "/api/Monitoring/{id}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -9,8 +9,44 @@
                     "Port": 5058
                 }
             ],
-            "UpstreamPathTemplate": "/api/Monitoring",
-            "UpstreamHttpMethod": ["GET", "POST", "PUT", "DELETE"]
+            "UpstreamPathTemplate": "/api/Monitoring/{id}",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Monitoring/{patientId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5058
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Monitoring/{patientId}",
+            "UpstreamHttpMethod": ["POST"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Monitoring/patient/{patientId}/recent",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5058
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Monitoring/patient/{patientId}/recent",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Monitoring/patient/{patientId}/check-alarms",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5058
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Monitoring/patient/{patientId}/check-alarms",
+            "UpstreamHttpMethod": ["GET"]
         },
         {
             "DownstreamPathTemplate": "/api/Patients",
@@ -22,7 +58,19 @@
                 }
             ],
             "UpstreamPathTemplate": "/api/Patients",
-            "UpstreamHttpMethod": ["GET", "POST", "PUT", "DELETE"]
+            "UpstreamHttpMethod": ["GET", "POST"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Patients/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5262
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Patients/{id}",
+            "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
         }
     ],
     "GlobalConfiguration": {

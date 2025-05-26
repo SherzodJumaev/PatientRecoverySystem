@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PRS.MonitoringService.Services;
 using PRS.Shared.Infrastructure.Data;
+using static PRS.PatientService.Grpc.PatientGrpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,12 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddGrpcClient<PatientGrpcClient>(o =>
+{
+    o.Address = new Uri("http://localhost:7128");
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,7 +53,8 @@ if (app.Environment.IsDevelopment())
     EnsureDatabaseUpToDate<MonitoringDbContext>(scope);
 }
 
-app.UseHttpsRedirection();
+
+// app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.MapControllers();

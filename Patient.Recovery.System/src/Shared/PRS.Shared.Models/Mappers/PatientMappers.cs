@@ -31,7 +31,9 @@ namespace PRS.Shared.Models.Mappers
                 LastName = patient.LastName,
                 PhoneNumber = patient.PhoneNumber,
                 Address = patient.Address,
-                Email = patient.Email
+                Email = patient.Email,
+                Gender = patient.Gender,
+                DateOfBirth = patient.DateOfBirth
             };
         }
     }

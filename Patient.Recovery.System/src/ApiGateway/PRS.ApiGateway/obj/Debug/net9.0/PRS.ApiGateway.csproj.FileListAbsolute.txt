@@ -29,8 +29,10 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Deb
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.csproj.CoreCompileInputs.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.MvcApplicationPartsAssemblyInfo.cs
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.MvcApplicationPartsAssemblyInfo.cache
+E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.sourcelink.json
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\scopedcss\bundle\PRS.ApiGateway.styles.css
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\staticwebassets.build.json
+E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\staticwebassets.build.json.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\staticwebassets.development.json
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiG.432A0971.Up2Date
@@ -39,5 +41,3 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Deb
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.pdb
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.genruntimeconfig.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\ref\PRS.ApiGateway.dll
-E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.sourcelink.json
-E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\staticwebassets.build.json.cache

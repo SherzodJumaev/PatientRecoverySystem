@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PRS.MonitoringService.Services;
+using PRS.PatientService.Grpc;
 using PRS.Shared.Models.DTOs.MonitoringDTOs;
 using PRS.Shared.Models.Mappers;
+using static PRS.PatientService.Grpc.PatientGrpc;
 
 namespace PRS.MonitoringService.Controllers
 {
@@ -10,10 +12,12 @@ namespace PRS.MonitoringService.Controllers
     public class MonitoringController : ControllerBase
     {
         private readonly IMonitoringService _monitoringService;
+        private readonly PatientGrpcClient _grpcClient;
 
-        public MonitoringController(IMonitoringService monitoringService)
+        public MonitoringController(IMonitoringService monitoringService, PatientGrpcClient grpcClient)
         {
             _monitoringService = monitoringService;
+            _grpcClient = grpcClient;
         }
 
         [HttpGet("patient/{patientId}")]
@@ -58,13 +62,18 @@ namespace PRS.MonitoringService.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateMonitoringRecord([FromBody] CreateMonitoringRecordDto createDto, CancellationToken ct)
+        [HttpPost("{patientId}")]
+        public async Task<IActionResult> CreateMonitoringRecord([FromRoute] int patientId, [FromBody] CreateMonitoringRecordDto createDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var monitoringRecord = createDto.ToMonitoringRecordFromCreateMonitoringRecordDto();
+            var response = await _grpcClient.CheckPatientExistsAsync(new PatientRequest { PatientId = patientId });
+
+            if (!response.Exists)
+                return NotFound($"Patient NOT FOUND with given ID: {patientId}");
+
+            var monitoringRecord = createDto.ToMonitoringRecordFromCreateMonitoringRecordDto(patientId);
 
             var result = await _monitoringService.CreateMonitoringRecordAsync(monitoringRecord, ct);
 
