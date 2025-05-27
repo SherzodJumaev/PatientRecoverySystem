@@ -98,6 +98,13 @@ namespace PRS.MonitoringService.Services
             return record;
         }
 
+        public async Task<IEnumerable<MonitoringRecord>> GetMonitoringRecordsAsync(CancellationToken ct)
+        {
+            var recentRecords = await _context.MonitoringRecords.ToListAsync(ct);
+
+            return recentRecords;
+        }
+
         public async Task<IEnumerable<MonitoringRecord>> GetPatientMonitoringRecordsAsync(int patientId, CancellationToken ct)
         {
             var records = await _context.MonitoringRecords

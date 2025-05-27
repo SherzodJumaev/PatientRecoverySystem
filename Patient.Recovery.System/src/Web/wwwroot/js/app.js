@@ -32,7 +32,7 @@ async function initializeApp() {
 }
 
 // Navigation Functions
-function showSection(sectionName) {
+function showSection(sectionName, element) {
     // Hide all sections
     const sections = document.querySelectorAll(".content-section");
     sections.forEach((section) => (section.style.display = "none"));
@@ -43,6 +43,7 @@ function showSection(sectionName) {
     // Update navigation
     const navLinks = document.querySelectorAll(".nav-link");
     navLinks.forEach((link) => link.classList.remove("active"));
+
     if (element) {
         element.classList.add("active");
     }
@@ -51,6 +52,7 @@ function showSection(sectionName) {
     switch (sectionName) {
         case "patients":
             loadPatientsTable();
+            loadDashboard();
             break;
         case "monitoring":
             loadMonitoringSection();
@@ -63,6 +65,7 @@ function showSection(sectionName) {
             break;
     }
 }
+// showSection();
 
 // API Functions
 async function apiRequest(endpoint, method = "GET", data = null) {
@@ -358,19 +361,21 @@ async function addMonitoringRecord() {
         };
 
         showLoading(true);
-        const response = await apiRequest("/Monitoring", "POST", formData);
+        const response = await apiRequest(
+            `/Monitoring/${formData.patientId}`,
+            "POST",
+            formData
+        );
 
-        if (response.success) {
-            showToast("Monitoring record added successfully", "success");
-            await loadPatientMonitoring();
+        showToast("Monitoring record added successfully", "success");
+        // await loadPatientMonitoring();
 
-            // Close modal and reset form
-            const modal = bootstrap.Modal.getInstance(
-                document.getElementById("addMonitoringModal")
-            );
-            modal.hide();
-            document.getElementById("addMonitoringForm").reset();
-        }
+        // Close modal and reset form
+        const modal = bootstrap.Modal.getInstance(
+            document.getElementById("addMonitoringModal")
+        );
+        modal.hide();
+        document.getElementById("addMonitoringForm").reset();
     } catch (error) {
         console.error("Error adding monitoring record:", error);
         showToast("Error adding monitoring record", "error");
@@ -385,8 +390,11 @@ async function loadPatientMonitoring() {
     ).value;
     const timeframe = document.getElementById("monitoring-timeframe").value;
 
-    if (!patientId) {
+    if (!patientId || patientId === "") {
+        console.log(patientId);
         document.querySelector("#monitoring-table tbody").innerHTML = "";
+
+        console.log(vitalsChart);
         if (vitalsChart) {
             vitalsChart.destroy();
             vitalsChart = null;
@@ -396,18 +404,33 @@ async function loadPatientMonitoring() {
 
     try {
         showLoading(true);
-        const response = await apiRequest(
-            `/Monitoring/patient/${patientId}/recent?hours=${timeframe}`
+
+        const response = await fetch(
+            `${API_BASE_URL}/Monitoring/patient/${patientId}/recent?hours=${timeframe}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    // Add Authorization header here if needed
+                },
+            }
         );
 
-        if (response.success) {
-            monitoringRecords = response.data || [];
-            updateMonitoringTable();
-            updateVitalsChart();
-
-            // Check for alarms
-            await checkPatientAlarms(patientId);
+        if (!response.ok) {
+            console.error("Request failed:", response.statusText);
+            return;
         }
+
+        const data = await response.json();
+        console.log(data);
+
+        monitoringRecords = data || [];
+        // console.log(monitoringRecords)
+        updateMonitoringTable();
+        updateVitalsChart();
+
+        // Check for alarms
+        await checkPatientAlarms(patientId);
     } catch (error) {
         console.error("Error loading patient monitoring:", error);
         showToast("Error loading monitoring data", "error");
@@ -558,12 +581,11 @@ async function loadDashboard() {
         const patients = await loadPatients();
         // Update statistics
         document.getElementById("total-patients").textContent = patients.length;
-        
+
         // Load recent monitoring records for dashboard
-        const recentResponse = await apiRequest(
-            "/Monitoring/patient/1/recent?hours=490"
-        );
-        
+        const recentResponse = await apiRequest("/Monitoring?hours=24");
+
+        console.log(recentResponse);
         if (Array.isArray(recentResponse) && recentResponse.length > 0) {
             // const recentRecords = records.data || [];
             updateDashboardMonitoringTable(recentResponse);
@@ -588,10 +610,10 @@ function updateDashboardMonitoringTable(records) {
     tbody.innerHTML = "";
 
     // Show only last 5 records
-    const recentRecords = records.slice(0, 5);
+    const recentRecords = records.slice(records.length - 5, records.length);
 
-    console.log(recentRecords)
-    console.log(records)
+    console.log(recentRecords.reverse());
+    console.log(records);
     recentRecords.forEach((record) => {
         const patient = patients.find((p) => p.id === record.patientId);
         const patientName = patient

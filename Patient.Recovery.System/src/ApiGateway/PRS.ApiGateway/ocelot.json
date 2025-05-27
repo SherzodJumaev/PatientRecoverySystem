@@ -66,7 +66,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7012
+                    "Port": 70127012
                 }
             ],
             "UpstreamPathTemplate": "/api/Patients/{id}",

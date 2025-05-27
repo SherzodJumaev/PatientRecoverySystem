@@ -91,7 +91,6 @@ services:
         restart: always
         container_name: monitoring-service
         environment:
-            - ASPNETCORE_URLS=http://+:8080;https://+:8081
             - ConnectionStrings__DefaultConnection=Server=monitoring_src_db,1433;Database=PatientRecoveryDB_Monitoring;User Id=sa;Password=Y0urP@ssw0rd!23;Trust Server Certificate=True;
         ports:
             - "7020:8080"
@@ -130,7 +129,7 @@ services:
     diagnosis-service:
         build:
             context: .
-            dockerfile: src/Services/PRS.DiagnosisService/Dockerfile
+            dockerfile: src/Services/PRS.DiagnoosisService/Dockerfile
         restart: always
         container_name: diagnosis-service
         environment:

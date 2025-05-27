@@ -14,9 +14,15 @@ namespace PRS.Shared.Models.Mappers
             return new Diagnosis
             {
                 PatientId = create.PatientId,
-                PhysicianId = create.PhysicianId,
+                DoctorName = create.DoctorName,
                 Symptoms = create.Symptoms,
                 Notes = create.Notes,
+                CreatedAt = DateTime.UtcNow,
+                Severity = create.Severity,
+                Treatment = create.Treatment,
+                DiagnosisDate = DateTime.Today,
+                DiagnosisName = create.DiagnosisName,
+                Status = create.Status
             };
         }
 
@@ -24,11 +30,14 @@ namespace PRS.Shared.Models.Mappers
         {
             return new Diagnosis
             {
-                TreatmentPlan = request.TreatmentPlan,
-                Medications = request.Medications,
-                Recommendations = request.Recommendations,
-                Status = request.Status,
-                Notes = request.Notes
+                Notes = request.Notes,
+                DoctorName = request.DoctorName,
+                DiagnosisDate = DateTime.UtcNow,
+                DiagnosisName = request.DiagnosisName,
+                Severity = request.Severity,
+                Treatment = request.Treatment,
+                Symptoms = request.Symptoms,
+                Status = request.Status
             };
         }
     }

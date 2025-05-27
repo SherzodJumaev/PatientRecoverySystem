@@ -37,7 +37,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddGrpcClient<PatientGrpcClient>(o =>
 {
-    o.Address = new Uri("http://localhost:7128");
+    o.Address = new Uri("https://localhost:7013");
 });
 
 

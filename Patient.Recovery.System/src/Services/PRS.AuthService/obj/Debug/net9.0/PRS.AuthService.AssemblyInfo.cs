@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PRS.AuthService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aabc3521c187878faf4022d3b416b43c855c5700")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4ba2c919b947380216e50d5e5789a9d059af081")]
 [assembly: System.Reflection.AssemblyProductAttribute("PRS.AuthService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PRS.AuthService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

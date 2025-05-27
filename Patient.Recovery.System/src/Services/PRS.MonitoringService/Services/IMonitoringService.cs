@@ -9,6 +9,7 @@ namespace PRS.MonitoringService.Services
 {
     public interface IMonitoringService
     {
+        Task<IEnumerable<MonitoringRecord>> GetMonitoringRecordsAsync(CancellationToken ct);
         Task<IEnumerable<MonitoringRecord>> GetPatientMonitoringRecordsAsync(int patientId, CancellationToken ct);
         Task<MonitoringRecord?> GetMonitoringRecordByIdAsync(int id, CancellationToken ct);
         Task<MonitoringRecord> CreateMonitoringRecordAsync(MonitoringRecord monitoringRecord, CancellationToken ct);

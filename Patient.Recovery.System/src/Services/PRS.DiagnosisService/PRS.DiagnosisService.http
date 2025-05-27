@@ -1,6 +1,0 @@
-@PRS.DiagnosisService_HostAddress = http://localhost:5245
-
-GET {{PRS.DiagnosisService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

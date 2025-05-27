@@ -20,6 +20,17 @@ namespace PRS.MonitoringService.Controllers
             _grpcClient = grpcClient;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMonitoringRecords(CancellationToken ct)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var recentRecords = await _monitoringService.GetMonitoringRecordsAsync(ct);
+
+            return Ok(recentRecords);
+        }
+
         [HttpGet("patient/{patientId}")]
         public async Task<IActionResult> GetPatientMonitoringRecords(int patientId, CancellationToken ct)
         {

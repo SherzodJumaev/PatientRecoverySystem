@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using PRS.Shared.Models.PatientModels;
@@ -8,19 +9,32 @@ namespace PRS.Shared.Models.DiagnosisModels
 {
     public class Diagnosis
     {
+        [Key]
         public int Id { get; set; }
+        [Required]
         public int PatientId { get; set; }
-        public int PhysicianId { get; set; }
-        public DateTime DiagnosisDate { get; set; }
+        [Required]
+        [StringLength(1000)]
         public string Symptoms { get; set; } = string.Empty;
-        public string TreatmentPlan { get; set; } = string.Empty;
-        public string Medications { get; set; } = string.Empty;
-        public string Recommendations { get; set; } = string.Empty;
-        public int SeverityLevel { get; set; } // 1-5 scale
-        public bool RequiresEmergency { get; set; }
-        public DiagnosisStatus Status { get; set; } // Active, Resolved, Under Review
+        [Required]
+        [StringLength(500)]
+        public string DiagnosisName { get; set; } = string.Empty;
+        [Required]
+        [StringLength(1000)]
+        public string Treatment { get; set; } = string.Empty;
+        [Required]
+        [StringLength(50)]
+        public string Status { get; set; } = string.Empty;
+        [Required]
+        [StringLength(50)]
+        public string Severity { get; set; } = string.Empty;
+        [Required]
+        public DateTime DiagnosisDate { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        [StringLength(500)]
         public string Notes { get; set; } = string.Empty;
-        public Patient? Patient { get; set; }
-        public Physician? Physician { get; set; }
+        [StringLength(100)]
+        public string DoctorName { get; set; } = string.Empty;
     }
 }

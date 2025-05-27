@@ -160,3 +160,12 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationServic
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\obj\Debug\net9.0\PRS.RehabilitationService.pdb
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\obj\Debug\net9.0\PRS.RehabilitationService.genruntimeconfig.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\obj\Debug\net9.0\ref\PRS.RehabilitationService.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Google.Protobuf.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Grpc.AspNetCore.Server.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Grpc.AspNetCore.Server.ClientFactory.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Grpc.Core.Api.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Grpc.Net.Client.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Grpc.Net.ClientFactory.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Grpc.Net.Common.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Newtonsoft.Json.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\System.Net.WebSockets.WebSocketProtocol.dll

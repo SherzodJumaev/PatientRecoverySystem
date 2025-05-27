@@ -6,7 +6,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5058
+                    "Port": 7022
                 }
             ],
             "UpstreamPathTemplate": "/api/Monitoring/{id}",
@@ -18,7 +18,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5058
+                    "Port": 7022
                 }
             ],
             "UpstreamPathTemplate": "/api/Monitoring/{patientId}",
@@ -30,7 +30,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5058
+                    "Port": 7022
                 }
             ],
             "UpstreamPathTemplate": "/api/Monitoring/patient/{patientId}/recent",
@@ -42,7 +42,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5058
+                    "Port": 7022
                 }
             ],
             "UpstreamPathTemplate": "/api/Monitoring/patient/{patientId}/check-alarms",
@@ -54,7 +54,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5262
+                    "Port": 7012
                 }
             ],
             "UpstreamPathTemplate": "/api/Patients",
@@ -66,7 +66,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5262
+                    "Port": 70127012
                 }
             ],
             "UpstreamPathTemplate": "/api/Patients/{id}",
