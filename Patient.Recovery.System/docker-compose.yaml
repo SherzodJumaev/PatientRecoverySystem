@@ -138,9 +138,34 @@ services:
             - "7030:8080"
             - "7031:8081"
         depends_on:
-            - sqlserver
+            diagnosis_src_db:
+                condition: service_healthy
         networks:
             - patientrecovery-network
+
+    diagnosis_src_db:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        restart: always
+        environment:
+            - SA_PASSWORD=Y0urP@ssw0rd!23
+            - ACCEPT_EULA=Y
+            - MSSQL_PID=Express
+        ports:
+            - "5437:1433"
+        volumes:
+            - ds_db_data:/var/opt/mssql
+        networks:
+            - patientrecovery-network
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "timeout 1 bash -c '</dev/tcp/localhost/1433' || exit 1",
+                ]
+            interval: 10s
+            retries: 10
+            start_period: 30s
+            timeout: 5s
 
     # Rehabilitation Service
     rehabilitation-service:
@@ -155,9 +180,34 @@ services:
             - "7040:8080"
             - "7041:8081"
         depends_on:
-            - sqlserver
+            rehabilitation_src_db:
+                condition: service_healthy
         networks:
             - patientrecovery-network
+
+    rehabilitation_src_db:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        restart: always
+        environment:
+            - SA_PASSWORD=Y0urP@ssw0rd!23
+            - ACCEPT_EULA=Y
+            - MSSQL_PID=Express
+        ports:
+            - "5438:1433"
+        volumes:
+            - rb_db_data:/var/opt/mssql
+        networks:
+            - patientrecovery-network
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "timeout 1 bash -c '</dev/tcp/localhost/1433' || exit 1",
+                ]
+            interval: 10s
+            retries: 10
+            start_period: 30s
+            timeout: 5s
 
     # Notification Service
     notification-service:
@@ -192,6 +242,22 @@ services:
         networks:
             - patientrecovery-network
 
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq
+        hostname: host-rabbitmq
+        restart: always
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: guest
+            RABBITMQ_DEFAULT_PASS: guest
+        volumes:
+            - rabbitmq-data:/var/lib/rabbitmq
+        networks:
+            - patientrecovery-network
+
     # Web Frontend (Nginx)
     web-frontend:
         image: nginx:alpine
@@ -212,6 +278,9 @@ volumes:
     sqlserver_data:
     ms_db_data:
     ps_db_data:
+    ds_db_data:
+    rb_db_data:
+    rabbitmq-data:
 
 networks:
     patientrecovery-network:

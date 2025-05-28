@@ -41,3 +41,4 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Deb
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.pdb
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\PRS.ApiGateway.genruntimeconfig.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\obj\Debug\net9.0\ref\PRS.ApiGateway.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\ApiGateway\PRS.ApiGateway\bin\Debug\net9.0\RabbitMQ.Client.dll

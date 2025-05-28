@@ -66,11 +66,107 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 70127012
+                    "Port": 7012
                 }
             ],
             "UpstreamPathTemplate": "/api/Patients/{id}",
             "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Diagnosis",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7028
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Diagnosis",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Diagnosis/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7028
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Diagnosis/{id}",
+            "UpstreamHttpMethod": ["GET", "DELETE"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Diagnosis/{patientId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7028
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Diagnosis/{patientId}",
+            "UpstreamHttpMethod": ["POST", "PUT"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Diagnosis/patient/{patientId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7028
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Diagnosis/patient/{patientId}",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/RehabilitationPlans",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7042
+                }
+            ],
+            "UpstreamPathTemplate": "/api/RehabilitationPlans",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/RehabilitationPlans/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7042
+                }
+            ],
+            "UpstreamPathTemplate": "/api/RehabilitationPlans/{id}",
+            "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/RehabilitationPlans/patient/{patientId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7042
+                }
+            ],
+            "UpstreamPathTemplate": "/api/RehabilitationPlans/patient/{patientId}",
+            "UpstreamHttpMethod": ["GET"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/RehabilitationPlans/{patientId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7042
+                }
+            ],
+            "UpstreamPathTemplate": "/api/RehabilitationPlans/{patientId}",
+            "UpstreamHttpMethod": ["POST"]
         }
     ],
     "GlobalConfiguration": {

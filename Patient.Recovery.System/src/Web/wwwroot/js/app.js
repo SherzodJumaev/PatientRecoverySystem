@@ -7,6 +7,10 @@ const API_BASE_URL = "http://localhost:5000/api"; // API Gateway URL
 let patients = [];
 let monitoringRecords = [];
 let vitalsChart = null;
+let diagnosis = [];
+let rehabilitationPlans = [];
+
+async function loadPatientMonitoring(params) {}
 
 async function initializePage() {
     patients = await loadPatients(); // <- wait to load actual data
@@ -116,6 +120,22 @@ async function loadPatients() {
     }
 }
 
+async function loadDiagnosis() {
+    try {
+        const response = await apiRequest("/Diagnosis");
+        // console.log("API response:", response);
+
+        // Assuming response is already the array
+        const diagnosis = response || [];
+
+        return diagnosis;
+    } catch (error) {
+        console.error("Error loading diagnosis:", error);
+        showToast("Error loading diagnosis", "error");
+        return [];
+    }
+}
+
 function updatePatientSelects() {
     const selects = document.querySelectorAll(
         "#monitoring-patient-select, #monitoringPatientId"
@@ -132,7 +152,8 @@ function updatePatientSelects() {
     });
 }
 
-function loadPatientsTable() {
+async function loadPatientsTable() {
+    patients = await loadPatients();
     const tbody = document.querySelector("#patients-table tbody");
     tbody.innerHTML = "";
     // console.log(patients);
@@ -234,6 +255,32 @@ async function deletePatient(patientId) {
     }
 }
 
+async function deleteDiagnos(patientId) {
+    if (!confirm("Are you sure you want to delete this diagnosis?")) {
+        return;
+    }
+
+    try {
+        showLoading(true);
+        const response = await fetch(`${API_BASE_URL}/Diagnosis/${patientId}`, {
+            method: "DELETE",
+        });
+
+        if (response.status == 204) {
+            showToast("Diagnos deleted successfully", "success");
+            await loadDiagnosisSection();
+            await loadPatients();
+        } else {
+            showToast("Failed to delete diagnosis", "error");
+        }
+    } catch (error) {
+        console.error("Error deleting diagnosis:", error);
+        showToast("Error deleting diagnosis", "error");
+    } finally {
+        showLoading(false);
+    }
+}
+
 async function showEditPatientModal(patientId) {
     try {
         // Get patient data from your patients array or make an API call
@@ -322,6 +369,44 @@ async function editPatient(patientId) {
     }
 }
 
+function viewMonitoringDetails(patientId) {
+    fetch(`${API_BASE_URL}/Monitoring/${patientId}`)
+        .then((response) => {
+            if (!response.ok) throw new Error("Monitoring data not found");
+            return response.json();
+        })
+        .then((data) => {
+            console.log("API Response:", data);
+
+            let html = `
+                <h5>Monitoring Details</h5>
+                <ul>
+                    <li>Time: ${new Date(data.recordedAt).toLocaleString()}</li>
+                    <li>Temperature: ${data.temperature}°C</li>
+                    <li>Blood Pressure: ${data.bloodPressureSystolic}/${
+                data.bloodPressureDiastolic
+            }</li>
+                    <li>Heart Rate: ${data.heartRate} bpm</li>
+                    <li>Weight: ${data.weight} kg</li>
+                    <li>Location: ${data.location}</li>
+                    <li>Symptoms: ${data.symptoms || "N/A"}</li>
+                    <li>Notes: ${data.notes || "N/A"}</li>
+                </ul>
+            `;
+
+            document.getElementById("monitoringDetailsContainer").innerHTML =
+                html;
+
+            const modal = new bootstrap.Modal(
+                document.getElementById("monitoringModal")
+            );
+            modal.show();
+        })
+        .catch((error) => {
+            alert("Error: " + error.message);
+        });
+}
+
 // Monitoring Functions
 async function loadMonitoringSection() {
     await loadPatients();
@@ -368,7 +453,7 @@ async function addMonitoringRecord() {
         );
 
         showToast("Monitoring record added successfully", "success");
-        // await loadPatientMonitoring();
+        await loadPatientMonitoring();
 
         // Close modal and reset form
         const modal = bootstrap.Modal.getInstance(
@@ -391,7 +476,7 @@ async function loadPatientMonitoring() {
     const timeframe = document.getElementById("monitoring-timeframe").value;
 
     if (!patientId || patientId === "") {
-        console.log(patientId);
+        // console.log(patientId);
         document.querySelector("#monitoring-table tbody").innerHTML = "";
 
         console.log(vitalsChart);
@@ -422,7 +507,7 @@ async function loadPatientMonitoring() {
         }
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         monitoringRecords = data || [];
         // console.log(monitoringRecords)
@@ -585,21 +670,23 @@ async function loadDashboard() {
         // Load recent monitoring records for dashboard
         const recentResponse = await apiRequest("/Monitoring?hours=24");
 
-        console.log(recentResponse);
+        // console.log(recentResponse);
         if (Array.isArray(recentResponse) && recentResponse.length > 0) {
             // const recentRecords = records.data || [];
             updateDashboardMonitoringTable(recentResponse);
         }
 
+        const active_monitorings = await apiRequest("/Monitoring");
+        const pending_diagnosis = await apiRequest("/Monitoring");
+
+
         // Update other stats (mock data for now)
-        document.getElementById("active-monitoring").textContent = Math.floor(
-            patients.length * 0.7
-        );
+        document.getElementById("active-monitoring").textContent = active_monitorings.length;
         document.getElementById("pending-diagnosis").textContent = Math.floor(
-            patients.length * 0.2
+            Math.floor(diagnosis.length)
         );
         document.getElementById("rehabilitation-plans").textContent =
-            Math.floor(patients.length * 0.5);
+            Math.floor(rehabilitationPlans.length);
     } catch (error) {
         console.error("Error loading dashboard:", error);
     }
@@ -612,8 +699,8 @@ function updateDashboardMonitoringTable(records) {
     // Show only last 5 records
     const recentRecords = records.slice(records.length - 5, records.length);
 
-    console.log(recentRecords.reverse());
-    console.log(records);
+    recentRecords.reverse();
+    // console.log(records);
     recentRecords.forEach((record) => {
         const patient = patients.find((p) => p.id === record.patientId);
         const patientName = patient
@@ -658,23 +745,370 @@ function updateDashboardMonitoringTable(records) {
 }
 
 // Diagnosis Functions (placeholder)
-function loadDiagnosisSection() {
+async function loadDiagnosisSection() {
+    diagnosis = await loadDiagnosis();
+
+    diagnosis.forEach((d) => {
+        console.log(d);
+    });
+    const tbody = document.querySelector("#diagnosis-table tbody");
+    tbody.innerHTML = "";
+    // console.log(patients);
+
+    diagnosis.forEach((diagnos) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${diagnos.patientId}</td>
+            <td>${diagnos.symptoms || "-"}</td>
+            <td>${diagnos.diagnosisName || "-"}</td>
+            <td>${diagnos.treatment || "-"}</td>
+            <td>${diagnos.status || "-"}</td>
+            <td>${diagnos.severity || "-"}</td>
+            <td>${diagnos.notes || "-"}</td>
+            <td>
+            ${
+                diagnos.diagnosisDate
+                    ? (() => {
+                          const d = new Date(diagnos.diagnosisDate);
+                          const year = d.getFullYear();
+                          const month = String(d.getMonth() + 1).padStart(
+                              2,
+                              "0"
+                          );
+                          const day = String(d.getDate()).padStart(2, "0");
+                          return `${year}/${month}/${day}`;
+                      })()
+                    : "-"
+            }
+            </td>
+            <td>${diagnos.doctorName || "-"}</td>
+            <td>
+                <button class="btn btn-sm btn-primary" onclick="showUpdateDiagnosisModal(${
+                    diagnos.patientId
+                })">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteDiagnos(${
+                    diagnos.id
+                })">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>`;
+        tbody.appendChild(row);
+    });
     // Placeholder for diagnosis functionality
     console.log("Loading diagnosis section...");
 }
 
 function showAddDiagnosisModal() {
-    showToast("Diagnosis feature coming soon!", "info");
+    const modal = new bootstrap.Modal(
+        document.getElementById("addDiagnosisModal")
+    );
+    modal.show();
+    // showToast("Diagnosis feature coming soon!", "info");
+}
+
+function hideDiagnosisModal() {
+    // Close modal and reset form
+    const modal = bootstrap.Modal.getInstance(
+        document.getElementById("addDiagnosisModal")
+    );
+    modal.hide();
+    document.getElementById("addDiagnosisForm").reset();
+}
+
+async function addDiagnosis() {
+    try {
+        const patientId = document.getElementById("patientId").value;
+        const formData = {
+            symptoms: document.getElementById("symptoms").value,
+            diagnosisName: document.getElementById("diagnosisName").value,
+            treatment: document.getElementById("treatment").value,
+            status: document.getElementById("status").value,
+            severity: document.getElementById("severity").value,
+            notes: document.getElementById("notes").value,
+            doctorName: document.getElementById("doctorName").value,
+        };
+
+        showLoading(true);
+        const response = await apiRequest(
+            `/Diagnosis/${patientId}`,
+            "POST",
+            formData
+        );
+
+        showToast("Diagnosis added successfully", "success");
+
+        diagnosis = await loadDiagnosis();
+        loadDiagnosisSection();
+        hideDiagnosisModal();
+    } catch (error) {
+        console.error("Error adding diagnosis:", error);
+        showToast("Error adding diagnosis", "error");
+    } finally {
+        showLoading(false);
+    }
+}
+
+async function editDiagnosis(patientId) {
+    try {
+        const formData = {
+            symptoms: document.getElementById("symptoms").value,
+            diagnosisName: document.getElementById("diagnosisName").value,
+            treatment: document.getElementById("treatment").value,
+            status: document.getElementById("status").value,
+            severity: document.getElementById("severity").value,
+            notes: document.getElementById("notes").value,
+            doctorName: document.getElementById("doctorName").value,
+        };
+
+        showLoading(true);
+
+        const response = await apiRequest(
+            `/Diagnosis/${patientId}`,
+            "PUT",
+            formData
+        );
+        console.log(response.success);
+
+        showToast("Diagnosis updated successfully", "success");
+
+        diagnosis = await loadDiagnosis();
+        loadDiagnosisSection();
+        hideDiagnosisModal();
+    } catch (error) {
+        console.error("Error updating diagnosis:", error);
+        showToast("Error updating diagnosis", "error");
+    } finally {
+        showLoading(false);
+    }
+}
+
+function showEditDiagnosisModal(diagnosis) {
+    try {
+        if (!diagnosis || !diagnosis.patientId) {
+            showToast("Invalid diagnosis data", "error");
+            return;
+        }
+
+        // Fill the form with diagnosis data
+        document.getElementById("symptoms").value = diagnosis.symptoms || "";
+        document.getElementById("diagnosisName").value =
+            diagnosis.diagnosisName || "";
+        document.getElementById("treatment").value = diagnosis.treatment || "";
+        document.getElementById("status").value = diagnosis.status || "";
+        document.getElementById("severity").value = diagnosis.severity || "";
+        document.getElementById("notes").value = diagnosis.notes || "";
+        document.getElementById("doctorName").value =
+            diagnosis.doctorName || "";
+
+        // Optional: Set hidden fields (if needed)
+        document.getElementById("diagnosisId").value = diagnosis.id;
+        document.getElementById("patientId").value = diagnosis.patientId;
+
+        // Change modal title and button
+        document.querySelector("#addDiagnosisModal .modal-title").textContent =
+            "Edit Diagnosis";
+
+        const submitButton = document.querySelector(
+            "#addDiagnosisModal .btn-primary"
+        );
+        submitButton.textContent = "Update Diagnosis";
+        submitButton.setAttribute(
+            "onclick",
+            `editDiagnosis(${diagnosis.id}, ${diagnosis.patientId})`
+        );
+
+        // Show the modal
+        const modal = new bootstrap.Modal(
+            document.getElementById("addDiagnosisModal")
+        );
+        modal.show();
+    } catch (error) {
+        console.error("Error showing edit modal:", error);
+        showToast("Error loading diagnosis data", "error");
+    }
+}
+
+function showUpdateDiagnosisModal() {
+    showToast("Update Diagnosis feature coming soon!", "info");
 }
 
 // Rehabilitation Functions (placeholder)
-function loadRehabilitationSection() {
-    // Placeholder for rehabilitation functionality
-    console.log("Loading rehabilitation section...");
+async function loadRehabilitationSection() {
+    // if (!patientId) {
+    //     console.warn("No patient ID provided for rehabilitation data.");
+    //     return;
+    // }
+
+    try {
+        showLoading(true); // Optional: show loading spinner
+
+        const response = await fetch(`${API_BASE_URL}/RehabilitationPlans`);
+        if (!response.ok)
+            throw new Error("Failed to load rehabilitation plans");
+
+        const plans = await response.json();
+
+        const tableBody = document.querySelector("#rehabilitation-table tbody");
+        tableBody.innerHTML = ""; // Clear any existing rows
+
+        if (plans.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="9" class="text-center">No rehabilitation plans found.</td></tr>`;
+            return;
+        }
+
+        plans.forEach((plan) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${plan.patientId}</td>
+                <td>${plan.planName}</td>
+                <td>${new Date(plan.startDate).toLocaleDateString()}</td>
+                <td>${new Date(plan.endDate).toLocaleDateString()}</td>
+                <td>${plan.progress}%</td>
+                <td>${plan.status}</td>
+                <td>${plan.therapistName}</td>
+                <td>${new Date(plan.createdAt).toLocaleDateString()}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="showEditRehabilitationModal(${
+                        plan.id
+                    })">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteRehabilitationPlan(${
+                        plan.id
+                    })">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error("Error loading rehabilitation plans:", error);
+        showToast("Error loading rehabilitation plans", "error");
+    } finally {
+        showLoading(false); // Optional: hide loading spinner
+    }
+}
+
+async function addRehabilitationPlan() {
+    try {
+        const patientId = document.getElementById("rehabPatientId").value;
+
+        const formData = {
+            planName: document.getElementById("planName").value.trim(),
+            startDate: document.getElementById("startDate").value,
+            endDate: document.getElementById("endDate").value,
+            progress: parseInt(document.getElementById("progress").value) || 0,
+            status: document.getElementById("rehabstatus").value,
+            notes: document.getElementById("notes").value,
+            therapistName: document
+                .getElementById("therapistName")
+                .value.trim(),
+            createdDate: new Date().toISOString(), // if needed by API
+        };
+
+        showLoading(true);
+        const response = await apiRequest(
+            `/RehabilitationPlans/${patientId}`,
+            "POST",
+            formData
+        );
+
+        showToast("Rehabilitation added successfully", "success");
+        
+        await loadRehabilitationSection();
+        hideRehabilitationModal();
+        document.getElementById("addRehabilitationForm").reset();
+    } catch (error) {
+        console.error("Error adding rehabilitation:", error);
+        showToast("Error adding rehabilitation", "error");
+    } finally {
+        showLoading(false);
+    }
 }
 
 function showAddRehabilitationModal() {
-    showToast("Rehabilitation feature coming soon!", "info");
+    const modal = new bootstrap.Modal(
+        document.getElementById("addRehabilitationModal")
+    );
+    modal.show();
+}
+
+function hideRehabilitationModal() {
+    // Close modal and reset form
+    const modal = bootstrap.Modal.getInstance(
+        document.getElementById("addRehabilitationModal")
+    );
+    modal.hide();
+    document.getElementById("addRehabilitationForm").reset();
+}
+
+// async function showEditRehabilitationModal(planId) {
+//     try {
+//         const response = await fetch(`${API_BASE_URL}/Rehabilitation/${planId}`);
+//         if (!response.ok) throw new Error("Failed to fetch rehabilitation plan");
+
+//         const plan = await response.json();
+
+//         // Fill form fields
+//         document.getElementById("rehabPatientId").value = plan.patientId;
+//         document.getElementById("planName").value = plan.planName;
+//         document.getElementById("startDate").value = plan.startDate.split("T")[0];
+//         document.getElementById("endDate").value = plan.endDate.split("T")[0];
+//         document.getElementById("progress").value = plan.progress;
+//         document.getElementById("status").value = plan.status;
+//         document.getElementById("therapistName").value = plan.therapistName;
+//         document.getElementById("notes").value = plan.notes;
+
+//         // Store plan ID in a hidden field or dataset
+//         document.getElementById("rehabilitationModal").setAttribute("data-plan-id", planId);
+
+//         // Set modal title and button
+//         document.querySelector("#rehabilitationModal .modal-title").textContent = "Edit Rehabilitation Plan";
+//         const submitBtn = document.querySelector("#rehabilitationModal .btn-primary");
+//         submitBtn.textContent = "Update";
+//         submitBtn.onclick = () => updateRehabilitationPlan(planId);
+
+//         const modal = new bootstrap.Modal(document.getElementById("rehabilitationModal"));
+//         modal.show();
+
+//     } catch (error) {
+//         console.error("Error loading plan for editing:", error);
+//         showToast("Failed to load rehabilitation plan", "error");
+//     }
+// }
+
+function showEditRehabilitationModal() {
+    showToast("Rehabilitation Update feature coming soon!", "info");
+}
+
+async function deleteRehabilitationPlan(planId) {
+    if (!confirm("Are you sure you want to delete this rehabilitation plan?"))
+        return;
+
+    try {
+        showLoading(true);
+        const response = await fetch(
+            `${API_BASE_URL}/RehabilitationPlans/${planId}`,
+            {
+                method: "DELETE",
+            }
+        );
+
+        if (!response.ok) throw new Error("Delete failed");
+
+        showToast("Rehabilitation plan deleted", "success");
+        await loadRehabilitationSection();
+        const patientId =
+            document.getElementById("rehabPatientId")?.value || planId; // Adjust if needed
+    } catch (error) {
+        console.error("Delete error:", error);
+        showToast("Failed to delete rehabilitation plan", "error");
+    } finally {
+        showLoading(false);
+    }
 }
 
 // Utility Functions

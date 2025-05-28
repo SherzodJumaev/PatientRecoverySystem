@@ -57,6 +57,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Carbon.MassTransit": {
+              "target": "Package",
+              "version": "[3.10.2, )"
+            },
             "Google.Protobuf": {
               "target": "Package",
               "version": "[3.31.0, )"
@@ -72,6 +76,10 @@
             "Grpc.Tools": {
               "target": "Package",
               "version": "[2.72.0, )"
+            },
+            "MassTransit.RabbitMQ": {
+              "target": "Package",
+              "version": "[8.4.1, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -97,9 +105,17 @@
               "target": "Package",
               "version": "[1.21.0, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[7.1.2, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

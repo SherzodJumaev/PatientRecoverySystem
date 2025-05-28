@@ -9,11 +9,11 @@ namespace PRS.Shared.Models.Mappers
 {
     public static class DiagnosisMappers
     {
-        public static Diagnosis ToDiagnosisFromCreateDiagnosisRequest(this CreateDiagnosisRequest create)
+        public static Diagnosis ToDiagnosisFromCreateDiagnosisRequest(this CreateDiagnosisRequest create, int patientId)
         {
             return new Diagnosis
             {
-                PatientId = create.PatientId,
+                PatientId = patientId,
                 DoctorName = create.DoctorName,
                 Symptoms = create.Symptoms,
                 Notes = create.Notes,
@@ -26,10 +26,11 @@ namespace PRS.Shared.Models.Mappers
             };
         }
 
-        public static Diagnosis ToDiagnosisFromDiagnosisUpdateRequest(this DiagnosisUpdateRequest request)
+        public static Diagnosis ToDiagnosisFromDiagnosisUpdateRequest(this DiagnosisUpdateRequest request, int patientId)
         {
             return new Diagnosis
             {
+                PatientId = patientId,
                 Notes = request.Notes,
                 DoctorName = request.DoctorName,
                 DiagnosisDate = DateTime.UtcNow,

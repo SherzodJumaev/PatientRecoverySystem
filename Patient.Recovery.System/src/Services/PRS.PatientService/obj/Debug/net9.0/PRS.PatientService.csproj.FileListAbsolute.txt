@@ -173,3 +173,5 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.PatientService\bin\D
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.PatientService\bin\Debug\net9.0\Grpc.Net.Client.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.PatientService\bin\Debug\net9.0\Grpc.Net.ClientFactory.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.PatientService\bin\Debug\net9.0\Grpc.Net.Common.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.PatientService\bin\Debug\net9.0\Newtonsoft.Json.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.PatientService\bin\Debug\net9.0\RabbitMQ.Client.dll

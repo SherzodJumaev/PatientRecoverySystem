@@ -1,7 +1,9 @@
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using PRS.MonitoringService.Services;
 using PRS.PatientService.Grpc;
 using PRS.Shared.Models.DTOs.MonitoringDTOs;
+using PRS.Shared.Models.EventHandlers;
 using PRS.Shared.Models.Mappers;
 using static PRS.PatientService.Grpc.PatientGrpc;
 
@@ -13,11 +15,13 @@ namespace PRS.MonitoringService.Controllers
     {
         private readonly IMonitoringService _monitoringService;
         private readonly PatientGrpcClient _grpcClient;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public MonitoringController(IMonitoringService monitoringService, PatientGrpcClient grpcClient)
+        public MonitoringController(IMonitoringService monitoringService, PatientGrpcClient grpcClient, IPublishEndpoint publishEndpoint)
         {
             _monitoringService = monitoringService;
             _grpcClient = grpcClient;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
@@ -87,6 +91,8 @@ namespace PRS.MonitoringService.Controllers
             var monitoringRecord = createDto.ToMonitoringRecordFromCreateMonitoringRecordDto(patientId);
 
             var result = await _monitoringService.CreateMonitoringRecordAsync(monitoringRecord, ct);
+
+            await _publishEndpoint.Publish(new MonitoringUpdatedEvent(monitoringRecord.PatientId));
 
             return CreatedAtAction(nameof(GetMonitoringRecordById), new { id = result.Id }, result);
         }

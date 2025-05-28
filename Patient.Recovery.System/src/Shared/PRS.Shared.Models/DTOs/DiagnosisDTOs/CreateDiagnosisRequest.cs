@@ -10,8 +10,6 @@ namespace PRS.Shared.Models.DTOs.DiagnosisDTOs
     public class CreateDiagnosisRequest
     {
         [Required]
-        public int PatientId { get; set; }
-        [Required]
         [StringLength(1000)]
         public string Symptoms { get; set; } = string.Empty;
         [Required]

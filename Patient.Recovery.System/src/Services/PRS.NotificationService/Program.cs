@@ -1,4 +1,6 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using PRS.NotificationService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,9 +8,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database
-// builder.Services.AddDbContext<PatientDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Register the event handler (consumer)
+// builder.Services.AddMassTransit(x =>
+// {
+//     x.AddConsumer<MonitoringUpdatedEventHandler>();
+
+//     x.UsingRabbitMq((context, cfg) =>
+//     {
+//         cfg.Host("5672", h =>
+//         {
+//             h.Username("guest");
+//             h.Password("guest");
+//         });
+
+//         cfg.ReceiveEndpoint("monitoring-updated-queue", e =>
+//         {
+//             e.ConfigureConsumer<MonitoringUpdatedEventHandler>(context);
+//         });
+//     });
+// });
+
+// Register your custom services (like INotificationService)
+// builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 

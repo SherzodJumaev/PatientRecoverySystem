@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using PRS.MonitoringService.Services;
 using PRS.Shared.Infrastructure.Data;
@@ -39,6 +40,18 @@ builder.Services.AddGrpcClient<PatientGrpcClient>(o =>
 {
     o.Address = new Uri("https://localhost:7013");
 });
+
+// builder.Services.AddMassTransit(x =>
+// {
+//     x.UsingRabbitMq((context, cfg) =>
+//     {
+//         cfg.Host("5672", h =>
+//         {
+//             h.Username("guest");
+//             h.Password("guest");
+//         });
+//     });
+// });
 
 
 var app = builder.Build();

@@ -18,8 +18,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"
-      Version="1.21.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.1" />
@@ -27,8 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\PRS.Shared.Models\PRS.Shared.Models.csproj" />
-    <ProjectReference
-      Include="..\..\Shared\PRS.Shared.Infrastructure\PRS.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Shared\PRS.Shared.Infrastructure\PRS.Shared.Infrastructure.csproj" />
     <Protobuf Include="Protos/patient.proto" GrpcServices="Server" />
   </ItemGroup>
 

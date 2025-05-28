@@ -169,3 +169,9 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationServic
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Grpc.Net.Common.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Newtonsoft.Json.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\System.Net.WebSockets.WebSocketProtocol.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Npgsql.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\PRS.Shared.Infrastructure.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\PRS.Shared.Models.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\PRS.Shared.Infrastructure.pdb
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\PRS.Shared.Models.pdb

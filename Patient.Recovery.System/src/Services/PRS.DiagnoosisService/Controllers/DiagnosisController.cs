@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PRS.DiagnoosisService.Services;
+using PRS.PatientService.Grpc;
 using PRS.Shared.Models.DTOs.DiagnosisDTOs;
 using PRS.Shared.Models.Mappers;
+using static PRS.PatientService.Grpc.PatientGrpc;
 
 namespace PRS.DiagnoosisService.Controllers
 {
@@ -10,10 +12,11 @@ namespace PRS.DiagnoosisService.Controllers
     public class DiagnosisController : ControllerBase
     {
         private readonly IDiagnosisService _diagnosisService;
-
-        public DiagnosisController(IDiagnosisService diagnosisService)
+        private readonly PatientGrpcClient _grpcClient;
+        public DiagnosisController(IDiagnosisService diagnosisService, PatientGrpcClient grpcClient)
         {
             _diagnosisService = diagnosisService;
+            _grpcClient = grpcClient;
         }
 
         [HttpGet]
@@ -54,15 +57,20 @@ namespace PRS.DiagnoosisService.Controllers
         //     return Ok(diagnoses);
         // }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateDiagnosis([FromBody] CreateDiagnosisRequest createDiagnosisDto)
+        [HttpPost("{patientId}")]
+        public async Task<IActionResult> CreateDiagnosis([FromRoute] int patientId, [FromBody] CreateDiagnosisRequest createDiagnosisDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var dModel = createDiagnosisDto.ToDiagnosisFromCreateDiagnosisRequest();
+                var response = await _grpcClient.CheckPatientExistsAsync(new PatientRequest { PatientId = patientId });
+
+                if (!response.Exists)
+                    return NotFound($"Patient NOT FOUND with given ID: {patientId}");
+
+                var dModel = createDiagnosisDto.ToDiagnosisFromCreateDiagnosisRequest(patientId);
 
                 var diagnosis = await _diagnosisService.CreateDiagnosisAsync(dModel);
                 return CreatedAtAction(nameof(GetDiagnosisById), new { id = diagnosis.Id }, diagnosis);
@@ -73,15 +81,16 @@ namespace PRS.DiagnoosisService.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDiagnosis([FromRoute] int id, [FromBody] DiagnosisUpdateRequest updateDiagnosisDto)
+        [HttpPut("{patientId}")]
+        public async Task<IActionResult> UpdateDiagnosis([FromRoute] int patientId, [FromBody] DiagnosisUpdateRequest updateDiagnosisDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var dModel = updateDiagnosisDto.ToDiagnosisFromDiagnosisUpdateRequest();
+            var dModel = updateDiagnosisDto.ToDiagnosisFromDiagnosisUpdateRequest(patientId);
 
-            var diagnosis = await _diagnosisService.UpdateDiagnosisAsync(id, dModel);
+            var diagnosis = await _diagnosisService.UpdateDiagnosisAsync(patientId, dModel);
+           
             if (diagnosis == null)
                 return NotFound();
 

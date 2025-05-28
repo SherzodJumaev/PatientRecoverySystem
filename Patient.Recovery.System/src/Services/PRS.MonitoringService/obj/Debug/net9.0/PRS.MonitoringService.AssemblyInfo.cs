@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PRS.MonitoringService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4ba2c919b947380216e50d5e5789a9d059af081")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+217a573d4549ed20b430c4d4875d43d4f117cd04")]
 [assembly: System.Reflection.AssemblyProductAttribute("PRS.MonitoringService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PRS.MonitoringService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

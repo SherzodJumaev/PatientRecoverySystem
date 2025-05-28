@@ -27,6 +27,7 @@ namespace PRS.DiagnoosisService.Services
 
             _context.Diagnoses.Remove(diagnosis);
             await _context.SaveChangesAsync();
+           
             return true;
         }
 

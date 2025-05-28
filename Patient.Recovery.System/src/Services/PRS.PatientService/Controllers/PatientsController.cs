@@ -1,11 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Newtonsoft.Json;
 using PRS.PatientService.Services;
 using PRS.Shared.Models.DTOs.PatientDTOs;
+using PRS.Shared.Models.EventHandlers;
 using PRS.Shared.Models.Mappers;
+using RabbitMQ.Client;
 
 namespace PRS.PatientService.Controllers
 {
@@ -82,7 +83,9 @@ namespace PRS.PatientService.Controllers
             var result = await _patientService.DeletePatientAsync(id, ct);
 
             if (result)
+            {
                 return NoContent();
+            }
 
             return NotFound();
         }
