@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PRS.Shared.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+217a573d4549ed20b430c4d4875d43d4f117cd04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1853afccc00228e1bb0a370b4b9c686c7bfec109")]
 [assembly: System.Reflection.AssemblyProductAttribute("PRS.Shared.Models")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PRS.Shared.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
