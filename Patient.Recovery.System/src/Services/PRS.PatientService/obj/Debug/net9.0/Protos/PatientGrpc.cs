@@ -49,6 +49,8 @@ namespace PRS.PatientService.Grpc {
     static readonly grpc::Marshaller<global::PRS.PatientService.Grpc.PatientRequest> __Marshaller_PatientRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PRS.PatientService.Grpc.PatientRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::PRS.PatientService.Grpc.PatientExistsResponse> __Marshaller_PatientExistsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PRS.PatientService.Grpc.PatientExistsResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::PRS.PatientService.Grpc.PatientNameResponse> __Marshaller_PatientNameResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PRS.PatientService.Grpc.PatientNameResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientExistsResponse> __Method_CheckPatientExists = new grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientExistsResponse>(
@@ -57,6 +59,14 @@ namespace PRS.PatientService.Grpc {
         "CheckPatientExists",
         __Marshaller_PatientRequest,
         __Marshaller_PatientExistsResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientNameResponse> __Method_GetPatientName = new grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientNameResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetPatientName",
+        __Marshaller_PatientRequest,
+        __Marshaller_PatientNameResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -74,6 +84,18 @@ namespace PRS.PatientService.Grpc {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// NEW
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::PRS.PatientService.Grpc.PatientNameResponse> GetPatientName(global::PRS.PatientService.Grpc.PatientRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
@@ -82,7 +104,8 @@ namespace PRS.PatientService.Grpc {
     public static grpc::ServerServiceDefinition BindService(PatientGrpcBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_CheckPatientExists, serviceImpl.CheckPatientExists).Build();
+          .AddMethod(__Method_CheckPatientExists, serviceImpl.CheckPatientExists)
+          .AddMethod(__Method_GetPatientName, serviceImpl.GetPatientName).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -93,6 +116,7 @@ namespace PRS.PatientService.Grpc {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, PatientGrpcBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_CheckPatientExists, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientExistsResponse>(serviceImpl.CheckPatientExists));
+      serviceBinder.AddMethod(__Method_GetPatientName, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientNameResponse>(serviceImpl.GetPatientName));
     }
 
   }

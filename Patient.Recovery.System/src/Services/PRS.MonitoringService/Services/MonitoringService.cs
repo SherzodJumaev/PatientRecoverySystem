@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PRS.Shared.Infrastructure.Data;
 using PRS.Shared.Models.Common;
+using PRS.Shared.Models.DTOs.PatientDTOs;
 using PRS.Shared.Models.MonitoringModels;
 
 namespace PRS.MonitoringService.Services
@@ -67,13 +68,28 @@ namespace PRS.MonitoringService.Services
             {
                 _logger.LogWarning("Health alarm detected for patient {PatientId}: {Reasons}",
                     patientId, string.Join(", ", alarmReasons));
-
-                // Here you would typically send notifications or alerts
-                // For now, just log the alarm
             }
 
             return hasAlarm;
         }
+
+        // public async Task<List<string>> CheckPatientsAlarmsAsync(CancellationToken ct)
+        // {
+        //     var patients = await _context.MonitoringRecords.ToListAsync(ct);
+
+        //     List<string> alerts = new List<string>();
+
+        //     foreach (var patient in patients)
+        //     {
+        //         if (patient.Temperature > 38.5 || patient.Temperature < 35.0 &&
+        //             patient.BloodPressureSystolic > 180 || patient.BloodPressureSystolic < 90 ||
+        //             patient.BloodPressureDiastolic > 110 || patient.BloodPressureDiastolic < 60 &&
+        //             patient.HeartRate > 120 || patient.HeartRate < 50)
+        //         {
+        //             alerts.Add(patient.)
+        //         }
+        //     }
+        // }
 
         public async Task<MonitoringRecord> CreateMonitoringRecordAsync(MonitoringRecord monitoringRecord, CancellationToken ct)
         {

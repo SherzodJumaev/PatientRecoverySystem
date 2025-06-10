@@ -4,6 +4,7 @@ option csharp_namespace = "PRS.PatientService.Grpc";
 
 service PatientGrpc {
   rpc CheckPatientExists(PatientRequest) returns (PatientExistsResponse);
+  rpc GetPatientName(PatientRequest) returns (PatientNameResponse); // NEW
 }
 
 message PatientRequest {
@@ -12,4 +13,8 @@ message PatientRequest {
 
 message PatientExistsResponse {
   bool exists = 1;
+}
+
+message PatientNameResponse {
+  string fullName = 1; // NEW
 }

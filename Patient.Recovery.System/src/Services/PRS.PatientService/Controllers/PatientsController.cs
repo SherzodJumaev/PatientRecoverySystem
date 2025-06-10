@@ -1,12 +1,7 @@
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Newtonsoft.Json;
 using PRS.PatientService.Services;
 using PRS.Shared.Models.DTOs.PatientDTOs;
-using PRS.Shared.Models.EventHandlers;
 using PRS.Shared.Models.Mappers;
-using RabbitMQ.Client;
 
 namespace PRS.PatientService.Controllers
 {

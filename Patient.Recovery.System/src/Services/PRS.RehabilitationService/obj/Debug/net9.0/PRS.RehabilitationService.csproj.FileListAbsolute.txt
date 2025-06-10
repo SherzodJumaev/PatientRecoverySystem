@@ -175,3 +175,4 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationServic
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\PRS.Shared.Models.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\PRS.Shared.Infrastructure.pdb
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\PRS.Shared.Models.pdb
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.RehabilitationService\bin\Debug\net9.0\RabbitMQ.Client.dll

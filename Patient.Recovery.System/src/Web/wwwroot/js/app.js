@@ -10,8 +10,6 @@ let vitalsChart = null;
 let diagnosis = [];
 let rehabilitationPlans = [];
 
-async function loadPatientMonitoring(params) {}
-
 async function initializePage() {
     patients = await loadPatients(); // <- wait to load actual data
     loadPatientsTable();
@@ -500,22 +498,20 @@ async function loadPatientMonitoring() {
                 },
             }
         );
-
+        
         if (!response.ok) {
             console.error("Request failed:", response.statusText);
             return;
         }
-
+        
         const data = await response.json();
         // console.log(data);
-
+        
         monitoringRecords = data || [];
         // console.log(monitoringRecords)
         updateMonitoringTable();
         updateVitalsChart();
-
-        // Check for alarms
-        await checkPatientAlarms(patientId);
+        
     } catch (error) {
         console.error("Error loading patient monitoring:", error);
         showToast("Error loading monitoring data", "error");
@@ -646,17 +642,102 @@ function updateVitalsChart() {
     });
 }
 
+// Function to check alarms for a specific patient
 async function checkPatientAlarms(patientId) {
     try {
         const response = await apiRequest(
             `/Monitoring/patient/${patientId}/check-alarms`
         );
 
-        if (response.success && response.data) {
-            showAlert("Health Alert", response.message, "warning");
+        // console.log(`Alarm check for patient ${patientId}:`, response); // Debug log
+
+        if (response) {
+            const response = await apiRequest(`Patient`);
+
+            showAlert(
+                "Health Alert",
+                `Critical vital signs detected for patient ID ${patientId}!`,
+                "warning"
+            );
         }
     } catch (error) {
         console.error("Error checking alarms:", error);
+        showAlert("Error", "Failed to check patient alarms", "error");
+    }
+}
+
+// function showAlert(title, message, type = "info") {
+//     const alertsContainer = document.getElementById("alerts-container");
+//     console.log(alertsContainer)
+//     if (!alertsContainer) {
+//         console.error("Alerts container not found!");
+//         return;
+//     }
+
+//     const alertColors = {
+//         success: "alert-success",
+//         error: "alert-danger",
+//         warning: "alert-warning",
+//         info: "alert-info",
+//     };
+
+//     const alertHtml = `
+//         <div class="alert ${alertColors[type]} alert-dismissible fade show" role="alert">
+//             <strong>${title}:</strong> ${message}
+//             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+//         </div>
+//     `;
+
+//     alertsContainer.insertAdjacentHTML("beforeend", alertHtml);
+
+//     // Auto-hide after 10 seconds for non-critical alerts
+//     if (type !== "error" && type !== "warning") {
+//         setTimeout(() => {
+//             const alert = alertsContainer.querySelector(".alert:last-child");
+//             if (alert) {
+//                 alert.remove();
+//             }
+//         }, 10000);
+//     }
+// }
+
+function showAlert(title, message, type = "info") {
+    const alertsContainer = document.getElementById("alerts-container");
+
+    if (!alertsContainer) {
+        console.error(
+            "Alerts container not found! Make sure you have <div id='alerts-container'></div>"
+        );
+        return;
+    }
+
+    const alertColors = {
+        success: "alert-success",
+        error: "alert-danger",
+        warning: "alert-warning",
+        info: "alert-info",
+    };
+
+    const alertId = `alert-${Date.now()}`;
+    const alertHtml = `
+        <div id="${alertId}" class="alert ${alertColors[type]} alert-dismissible fade show" role="alert">
+            <strong>${title}:</strong> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+
+    alertsContainer.insertAdjacentHTML("beforeend", alertHtml);
+
+    console.log(`Alert shown: ${title} - ${message}`);
+
+    // Auto-remove non-critical alerts after 15 seconds
+    if (type === "info" || type === "success") {
+        setTimeout(() => {
+            const alertElement = document.getElementById(alertId);
+            if (alertElement) {
+                alertElement.remove();
+            }
+        }, 15000);
     }
 }
 
@@ -677,16 +758,17 @@ async function loadDashboard() {
         }
 
         const active_monitorings = await apiRequest("/Monitoring");
-        const pending_diagnosis = await apiRequest("/Monitoring");
-
+        const pending_diagnosis = await apiRequest("/Diagnosis");
+        const rehabilitation_plans = await apiRequest("/RehabilitationPlans");
 
         // Update other stats (mock data for now)
-        document.getElementById("active-monitoring").textContent = active_monitorings.length;
+        document.getElementById("active-monitoring").textContent =
+            active_monitorings.length;
         document.getElementById("pending-diagnosis").textContent = Math.floor(
-            Math.floor(diagnosis.length)
+            Math.floor(pending_diagnosis.length)
         );
         document.getElementById("rehabilitation-plans").textContent =
-            Math.floor(rehabilitationPlans.length);
+            Math.floor(rehabilitation_plans.length);
     } catch (error) {
         console.error("Error loading dashboard:", error);
     }
@@ -696,8 +778,14 @@ function updateDashboardMonitoringTable(records) {
     const tbody = document.querySelector("#recent-monitoring-table tbody");
     tbody.innerHTML = "";
 
+    let recentRecords = 0;
+
+    if (records.length > 5) {
+        recentRecords = records.slice(records.length - 5, records.length);
+    } else {
+        recentRecords = records;
+    }
     // Show only last 5 records
-    const recentRecords = records.slice(records.length - 5, records.length);
 
     recentRecords.reverse();
     // console.log(records);
@@ -748,9 +836,6 @@ function updateDashboardMonitoringTable(records) {
 async function loadDiagnosisSection() {
     diagnosis = await loadDiagnosis();
 
-    diagnosis.forEach((d) => {
-        console.log(d);
-    });
     const tbody = document.querySelector("#diagnosis-table tbody");
     tbody.innerHTML = "";
     // console.log(patients);
@@ -1017,7 +1102,7 @@ async function addRehabilitationPlan() {
         );
 
         showToast("Rehabilitation added successfully", "success");
-        
+
         await loadRehabilitationSection();
         hideRehabilitationModal();
         document.getElementById("addRehabilitationForm").reset();
@@ -1165,26 +1250,6 @@ function showToast(message, type = "info") {
     toastElement.addEventListener("hidden.bs.toast", () => {
         toastElement.remove();
     });
-}
-
-function showAlert(title, message, type = "info") {
-    const alertsContainer = document.getElementById("alerts-container");
-
-    const alertColors = {
-        success: "alert-success",
-        error: "alert-danger",
-        warning: "alert-warning",
-        info: "alert-info",
-    };
-
-    const alertHtml = `
-        <div class="alert ${alertColors[type]} alert-dismissible fade show" role="alert">
-            <strong>${title}:</strong> ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    `;
-
-    alertsContainer.insertAdjacentHTML("beforeend", alertHtml);
 }
 
 // Event Listeners

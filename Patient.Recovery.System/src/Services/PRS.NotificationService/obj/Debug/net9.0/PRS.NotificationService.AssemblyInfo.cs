@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PRS.NotificationService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+217a573d4549ed20b430c4d4875d43d4f117cd04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b01485adafbdb69e927e73816f64a878d9765e0")]
 [assembly: System.Reflection.AssemblyProductAttribute("PRS.NotificationService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PRS.NotificationService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

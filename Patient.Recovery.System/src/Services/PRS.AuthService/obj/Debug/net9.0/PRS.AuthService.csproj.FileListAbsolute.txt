@@ -166,3 +166,5 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.AuthService\obj\Debu
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.AuthService\obj\Debug\net9.0\PRS.AuthService.pdb
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.AuthService\obj\Debug\net9.0\PRS.AuthService.genruntimeconfig.cache
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.AuthService\obj\Debug\net9.0\ref\PRS.AuthService.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.AuthService\bin\Debug\net9.0\Newtonsoft.Json.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.AuthService\bin\Debug\net9.0\RabbitMQ.Client.dll

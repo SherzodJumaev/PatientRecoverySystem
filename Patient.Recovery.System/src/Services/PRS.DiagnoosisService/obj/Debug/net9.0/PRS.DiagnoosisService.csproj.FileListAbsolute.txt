@@ -175,3 +175,4 @@ E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnoosisService\ob
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnoosisService\bin\Debug\net9.0\Grpc.AspNetCore.Server.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnoosisService\bin\Debug\net9.0\Grpc.AspNetCore.Server.ClientFactory.dll
 E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnoosisService\bin\Debug\net9.0\Grpc.Net.ClientFactory.dll
+E:\Dotnet-Projects\Patient.Recovery.System\src\Services\PRS.DiagnoosisService\bin\Debug\net9.0\RabbitMQ.Client.dll

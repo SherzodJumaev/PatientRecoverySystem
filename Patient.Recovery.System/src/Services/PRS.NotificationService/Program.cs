@@ -9,27 +9,27 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Register the event handler (consumer)
-// builder.Services.AddMassTransit(x =>
-// {
-//     x.AddConsumer<MonitoringUpdatedEventHandler>();
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<MonitoringUpdatedEventHandler>();
 
-//     x.UsingRabbitMq((context, cfg) =>
-//     {
-//         cfg.Host("5672", h =>
-//         {
-//             h.Username("guest");
-//             h.Password("guest");
-//         });
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("5672", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
 
-//         cfg.ReceiveEndpoint("monitoring-updated-queue", e =>
-//         {
-//             e.ConfigureConsumer<MonitoringUpdatedEventHandler>(context);
-//         });
-//     });
-// });
+        cfg.ReceiveEndpoint("monitoring-updated-queue", e =>
+        {
+            e.ConfigureConsumer<MonitoringUpdatedEventHandler>(context);
+        });
+    });
+});
 
 // Register your custom services (like INotificationService)
-// builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 

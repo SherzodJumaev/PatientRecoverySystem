@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using PRS.Shared.Models.DTOs.PatientDTOs;
 using PRS.Shared.Models.MonitoringModels;
 
 namespace PRS.MonitoringService.Services
@@ -15,5 +16,6 @@ namespace PRS.MonitoringService.Services
         Task<MonitoringRecord> CreateMonitoringRecordAsync(MonitoringRecord monitoringRecord, CancellationToken ct);
         Task<IEnumerable<MonitoringRecord>> GetRecentRecordsAsync(int patientId, int hours = 24, CancellationToken ct = default);
         Task<bool> CheckForAlarmsAsync(int patientId, CancellationToken ct);
+        // Task<List<string>> CheckPatientsAlarmsAsync(CancellationToken ct);
     }
 }

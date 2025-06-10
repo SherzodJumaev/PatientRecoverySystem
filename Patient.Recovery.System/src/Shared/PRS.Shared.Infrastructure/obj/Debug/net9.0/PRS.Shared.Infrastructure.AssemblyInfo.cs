@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PRS.Shared.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1853afccc00228e1bb0a370b4b9c686c7bfec109")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b01485adafbdb69e927e73816f64a878d9765e0")]
 [assembly: System.Reflection.AssemblyProductAttribute("PRS.Shared.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PRS.Shared.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

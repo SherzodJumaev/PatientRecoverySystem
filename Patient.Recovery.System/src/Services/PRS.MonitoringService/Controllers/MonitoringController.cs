@@ -15,13 +15,13 @@ namespace PRS.MonitoringService.Controllers
     {
         private readonly IMonitoringService _monitoringService;
         private readonly PatientGrpcClient _grpcClient;
-        private readonly IPublishEndpoint _publishEndpoint;
+        // private readonly IPublishEndpoint _publishEndpoint;
 
-        public MonitoringController(IMonitoringService monitoringService, PatientGrpcClient grpcClient, IPublishEndpoint publishEndpoint)
+        public MonitoringController(IMonitoringService monitoringService, PatientGrpcClient grpcClient)
         {
             _monitoringService = monitoringService;
             _grpcClient = grpcClient;
-            _publishEndpoint = publishEndpoint;
+            // _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
@@ -92,10 +92,24 @@ namespace PRS.MonitoringService.Controllers
 
             var result = await _monitoringService.CreateMonitoringRecordAsync(monitoringRecord, ct);
 
-            await _publishEndpoint.Publish(new MonitoringUpdatedEvent(monitoringRecord.PatientId));
+            // await _publishEndpoint.Publish(new MonitoringUpdatedEvent(monitoringRecord.PatientId));
 
             return CreatedAtAction(nameof(GetMonitoringRecordById), new { id = result.Id }, result);
         }
+
+        // [HttpGet("patient/{patientId}/check-alarms")]
+        // public async Task<IActionResult> CheckForAlarms(int patientId, CancellationToken ct)
+        // {
+        //     if (!ModelState.IsValid)
+        //         return BadRequest(ModelState);
+
+        //     var result = await _monitoringService.CheckForAlarmsAsync(patientId, ct);
+
+        //     if (result)
+        //         return NotFound();
+
+        //     return Ok(result);
+        // }
 
         [HttpGet("patient/{patientId}/check-alarms")]
         public async Task<IActionResult> CheckForAlarms(int patientId, CancellationToken ct)
@@ -105,9 +119,7 @@ namespace PRS.MonitoringService.Controllers
 
             var result = await _monitoringService.CheckForAlarmsAsync(patientId, ct);
 
-            if (result)
-                return NotFound();
-
+            // Simply return the result - don't check if it's true/false
             return Ok(result);
         }
     }

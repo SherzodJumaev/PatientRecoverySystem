@@ -49,6 +49,8 @@ namespace PRS.PatientService.Grpc {
     static readonly grpc::Marshaller<global::PRS.PatientService.Grpc.PatientRequest> __Marshaller_PatientRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PRS.PatientService.Grpc.PatientRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::PRS.PatientService.Grpc.PatientExistsResponse> __Marshaller_PatientExistsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PRS.PatientService.Grpc.PatientExistsResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::PRS.PatientService.Grpc.PatientNameResponse> __Marshaller_PatientNameResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PRS.PatientService.Grpc.PatientNameResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientExistsResponse> __Method_CheckPatientExists = new grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientExistsResponse>(
@@ -57,6 +59,14 @@ namespace PRS.PatientService.Grpc {
         "CheckPatientExists",
         __Marshaller_PatientRequest,
         __Marshaller_PatientExistsResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientNameResponse> __Method_GetPatientName = new grpc::Method<global::PRS.PatientService.Grpc.PatientRequest, global::PRS.PatientService.Grpc.PatientNameResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetPatientName",
+        __Marshaller_PatientRequest,
+        __Marshaller_PatientNameResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -110,6 +120,54 @@ namespace PRS.PatientService.Grpc {
       public virtual grpc::AsyncUnaryCall<global::PRS.PatientService.Grpc.PatientExistsResponse> CheckPatientExistsAsync(global::PRS.PatientService.Grpc.PatientRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_CheckPatientExists, null, options, request);
+      }
+      /// <summary>
+      /// NEW
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::PRS.PatientService.Grpc.PatientNameResponse GetPatientName(global::PRS.PatientService.Grpc.PatientRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetPatientName(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// NEW
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::PRS.PatientService.Grpc.PatientNameResponse GetPatientName(global::PRS.PatientService.Grpc.PatientRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetPatientName, null, options, request);
+      }
+      /// <summary>
+      /// NEW
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::PRS.PatientService.Grpc.PatientNameResponse> GetPatientNameAsync(global::PRS.PatientService.Grpc.PatientRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetPatientNameAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// NEW
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::PRS.PatientService.Grpc.PatientNameResponse> GetPatientNameAsync(global::PRS.PatientService.Grpc.PatientRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetPatientName, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
